@@ -1,0 +1,18 @@
+.layout .logo {
+    //Лучше не трогать селектор
+    width: 150px;
+    height: 40px;
+    background: #ffffff33;
+    padding: 5px;
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.ant-form-item {
+    margin-bottom: 0px;
+}

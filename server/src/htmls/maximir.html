@@ -1,0 +1,1106 @@
+<!DOCTYPE html><html lang="en-US"><head>
+	<title>Максимир</title>
+<base href="http://www.maxi-mir.ru/">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="favicon.ico" rel="shortcut icon" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="/css/layout.css" media="all">
+<link rel="stylesheet" type="text/css" href="/css/reset.css" media="all">
+<script type="text/javascript" async="" src="https://mc.yandex.ru/metrika/watch.js"></script><script type="text/javascript" async="" src="http://www.google-analytics.com/ga.js"></script><script type="text/javascript" src="/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+		$(function(){
+			$('dl.tabs dt A').click(function(){
+			    if($(this).parent().hasClass('link')) return;
+			     
+				$(this)
+				    .parent()
+					.siblings().removeClass('selected').end()
+					.next('dd').andSelf().addClass('selected');
+					
+					$(this).parents('#topMenu dl').find('i').css({visibility: 'visible'});
+				    $(this).parent('#topMenu dt, #topMenu dd').prev().prev().find('i').css({visibility: 'hidden'});
+				    $(this).parent('#topMenu dt, #topMenu dd').prev().find('i').css({visibility: 'hidden'});
+
+
+			    return false;
+                });
+
+                $('#topTime').click(function(){
+                  $('#timeBubble, #shadowOverlay').fadeIn(200);
+                  return false;
+                });
+
+                $('#shadowOverlay, #closeTimeBubble').click(function(){
+                  $('#timeBubble, #shadowOverlay').fadeOut(200);
+                  return false;
+                });
+
+                $('.zakazBtn').click(function(){
+                    $('#zakazBublle, #shadowOverlay').fadeIn(200);
+                    var id_z = $(this).next().val();
+                    $('[name="id_zakaz"]').val(id_z);
+                    return false;
+                });
+
+                $('.b-cart-item .birth-park').click(function(){
+                $('.b-callmes-info p:last').html('\
+                            <p>Ваш менеджер по корпоративным мероприятиям<br>\
+                                <span class="b-callmes-info-name"></span>\
+                                <br>\
+                                <span class="b-callmes-info-phone">8-(920)-433-44-99 - Евгений <br>  </span>\
+								<input type="hidden" name="type_card" value="birth_park">\
+                            </p>\
+                            ');   
+                    return false;
+                });
+                
+                $('.b-cart-item .corp-park').click(function(){
+                $('.b-callmes-info p:last').html('\
+                            <p>Ваш менеджер по корпоративным мероприятиям<br>\
+                                <span class="b-callmes-info-name"></span>\
+                                <br>\
+                                <span class="b-callmes-info-phone">8 (920) 461-57-77 - Мария</span>\
+								<span class="b-callmes-info-name"></span>\
+                                <br>\
+                                <span class="b-callmes-info-phone"></span>\
+								<input type="hidden" name="type_card" value="corp_park">\
+                            </p>\
+                            ');               
+                    return false;
+                });
+                
+   
+                
+                $('.b-cart-item .birth-bowling').click(function(){
+                $('.b-callmes-info p:last').html('\
+                            <p>Ваш менеджер по корпоративным мероприятиям<br>\
+                                <span class="b-callmes-info-name"></span>\
+                                <br>\
+                                <span class="b-callmes-info-phone">8-(920)-433-44-99 - Евгений  </span>\
+								<span class="b-callmes-info-name"></span>\
+                                <br>\
+								<input type="hidden" name="type_card" value="corp_park">\
+                            </p>\
+                            ');   
+                    return false;
+                });
+                
+                $('.b-cart-item .corp-bowling').click(function(){
+                $('.b-callmes-info p:last').html('\
+                            <p>Ваш менеджер по корпоративным мероприятиям<br>\
+                                <span class="b-callmes-info-name"></span>\
+                                <br>\
+                                <span class="b-callmes-info-phone">8 (920) 461-57-77 - Мария</span>\
+								<br>\
+                                <span class="b-callmes-info-phone"></span>\
+								<input type="hidden" name="type_card" value="corp_bowling">\
+                            </p>\
+                            ');               
+                    return false;
+                });
+
+                $('#shadowOverlay, #closeZakazBubble').click(function(){
+                    $('#zakazBublle, #shadowOverlay').fadeOut(200);
+                    return false;
+                });
+
+
+        var opacity = 0.5, toOpacity = 1, duration = 250;
+            $('#promoPrev,#promoNext').css('opacity',opacity).hover(function() {
+                $(this).fadeTo(duration,toOpacity).stop(true, true);
+            },
+            function() {
+                $(this).fadeTo(duration,opacity).stop(true, true);
+            }
+        );
+
+
+            $('.b-cinema-like').live("click", function(){
+                var id = $('input', this).val();
+                pointer = $(this);
+                count_wg = parseInt($('.b-cinema-like__num', this).html());
+                rating = parseInt($('[data-id=' + id + ']').html());
+
+
+                $.ajax({
+                    url: '/cinema/incrating?id=' + id,
+                    cache: false,
+                    beforeSend: function() {
+
+                    },
+                    success: function(html){
+
+                        if (html != 0) {
+                            pointer.addClass('active');
+                            $('.b-cinema-like__text', pointer).text('Я иду');
+                            count_wg++;
+                            rating++;
+                            $('.b-cinema-like__num', pointer).text(count_wg);
+                            $('[data-id=' + id + ']').text(rating);
+                        }
+
+
+
+                    }
+                });
+
+                return false;
+
+            });
+
+
+        });
+		function sliderShow(thisClick){
+			var numberOfLi = $('#promo-image li').size(); // Количество li
+			//alert(numberOfLi);
+                switch (thisClick) {
+                    case 'promoPrev':
+                        thisSlide--;
+                        if (thisSlide < 0) thisSlide = numberOfLi-1;
+                    break;
+					
+					default: 
+						thisSlide ++;
+                        if (thisSlide > numberOfLi-1) thisSlide = 0;
+						//alert(thisSlide);
+					break;
+                }
+			
+                $('.promo-image li').hide();
+                $('.promo-image li').eq(thisSlide).fadeIn(900).css('display', 'block');
+
+                return false;
+		}
+		var thisSlide = 0;
+		$(document).ready(function() {
+			var numberOfLi = $('#promo-image li').size(); // Количество li
+			if (numberOfLi> 1) {
+				setInterval('sliderShow()', 5000);
+			}
+			$('#promoPrev').click(function () {
+				sliderShow('promoPrev')
+			});
+			$('#promoNext').click(function () {
+				sliderShow('promoNext')
+			});
+		});
+</script>
+
+<!-- Put this script tag to the <head> of your page -->
+<script type="text/javascript" src="http://userapi.com/js/api/openapi.js?45"></script>
+
+<script type="text/javascript">
+//  VK.init({apiId: Maximir, onlyWidgets: true});
+</script>
+<script type="text/javascript" src="/jquery-lightbox/js/jquery.lightbox-0.5.js?v2"></script>
+<link rel="stylesheet" type="text/css" href="/jquery-lightbox/css/jquery.lightbox-0.5.css?v1" media="screen">
+
+
+<script type="text/javascript" src="/js/jquery.blockUI.js"></script>
+
+<script type="text/javascript" src="/js/jquery.form.js"></script>
+<script type="text/javascript" src="/jqui/js/jquery-ui-1.8.16.custom.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/jqui/css/smoothness/jquery-ui-1.8.14.custom.css">
+
+
+<script type="text/javascript" src="/js/jquery.easing.1.3.js"></script>
+<script type="text/javascript">
+    $(function(){
+    $('a.lightbox').lightBox({
+    txtImage:				'Фотография',	// (string) Specify text "Image"
+    txtOf:					'из',		// (string) Specify text "of"
+    imageLoading: '/jquery-lightbox/images/loading.gif',
+    imageBtnClose: '/jquery-lightbox/images/lightbox-btn-close.gif',
+    imageBtnPrev: '/jquery-lightbox/images/lightbox-btn-prev.png?v4',
+    imageBtnNext: '/jquery-lightbox/images/lightbox-btn-next.png?v4',
+    imageBlank: 'lightbox-blank.gif'
+    });
+
+    });
+</script>
+
+	<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-31449973-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+    </head>
+    <body>
+        <div id="all">
+            <div class="l-top-panel">
+﻿
+
+<div class="b-main-menu">
+    <div class="h-box"><span class="wrp">
+			<div class="logo"><a href="/"><img src="i/logo.jpg" alt="Максимир Воронеж"></a></div>
+
+			<div>
+				<!--[if IE 9]>
+					<style>
+						.left{
+							right: -66px;
+						}
+						#topQuestion{
+							margin-left:100px;
+						}
+						#input{
+							margin-left: 100px;
+						}
+						.divTopMenu{
+							right: -24px;
+						}
+						#reg{
+							margin-left: 100px;
+						}
+					</style>
+				<![endif]--> 
+<script type="text/javascript">
+                function CloseaAllSubMenu(){
+                    
+                    $("#idSubMenu").css({visibility: 'hidden'});
+                    $("#IdSubMenuMap").css({visibility: 'hidden'});
+                    $("#idDivTopSubMenu").find('ul').css({visibility: 'hidden'});
+                    $("#idDivTopSubMenu2").find('ul').css({visibility: 'hidden'});
+                    $("#idITopMenuShop").removeClass('gray-blockMenu');
+                    $("#idITopMenuRazvl").removeClass('gray-blockMenu');
+                    $("#idITopMenuSpec").removeClass('gray-blockMenu');
+                    $("#idITopMenuNews").removeClass('gray-blockMenu');
+                    $("#idITopMenuInfo").removeClass('gray-blockMenu');
+                     return false;
+                }
+		function OpenRazvl(){
+                    $("#idSubMenu").css({visibility: 'visible'});
+                    $("#idDivTopSubMenu").find('ul').css({visibility: 'visible'});
+                    $("#idITopMenuRazvl").addClass('gray-blockMenu');
+                    $("#idSubMenu").css({left: '520px'});
+                    
+                    return false;
+                }
+                function OpenoTRC(){
+                    $("#idSubMenu").css({visibility: 'visible'});
+                    $("#idITopMenuInfo").addClass('gray-blockMenu');
+                    $("#idDivTopSubMenu2").find('ul').css({visibility: 'visible'});
+                    $("#idSubMenu").css({left: '1150px'});
+                    
+                    return false;
+                }
+                 $(document).ready(function(){	
+                    $("#razvl").click(CloseaAllSubMenu);
+                    $("#razvl").click(OpenRazvl);
+                    $("#oTRC").click(CloseaAllSubMenu);
+                    $("#oTRC").click(OpenoTRC);
+                 });
+</script>
+				<div class="left">
+
+					<a id="time" style="font-size:10px; left:-30px;"></a><a href="/info/time" style="font-size:10px; left:-30px; ">Часы работы: 10:00 - 22:00</a>
+					<a id="go" style="font-size:0px; top:30px; left:-205px;"></a><a href="/info/contacts#contactsMap" style="font-size:10px; top:30px; left:-205px;">Как добраться&nbsp;</a>
+					<!--<a  id="topQuestion">Задать вопрос </a>-->
+					<!--<a href="info/time" id="topPhone">Администратор 233-02-20</a>-->
+					<a id="linkLogin" href="http://www.maxi-mir.ru/info/partners" style="font-size:10px; top:-2px; left:-140px;">Администратор ⋅ 2-330-220 </a>
+					<a id="reg" href="http://maxi-mir.ru/cinema" style="font-size:10px; top:30px; left:-290px;">Кинотеатр ⋅ 2-333-777</a>
+				    <a id="linkLogin" href="http://www.maxi-mir.ru/info/tenants" style="position:absolute; font-size:10px; top:-2px; left:295px;">Аренда ⋅ 2-06-79-26 </a>
+					<a id="linkLogin" href="http://www.maxi-mir.ru/info/job" style="position:absolute; font-size:10px; top:30px; left:295px;">Вакансии ⋅ 2-28-07-14 </a>
+					<a href="https://www.survio.com/survey/d/H1A9K9T4W5B9U2J1Z" target="_blanck" style="position:absolute; font-size:15px; top:-10px; left:475px; width:200px; height: 50px; text-align:center; background-color:#79b43c; text-decoration:none; color:#FFF; border-radius: 50px" border-radi=""><p style="font-size:20px; margin-top: 5px;">Заполни анкету</p> и получи подарок</a>
+						<a id="input" style="position:absolute; font-size:10px;  top:2px; left:570px;"></a><a href="/login" id="linkLogin" style="position:absolute; font-size:10px;  left:750px;">Вход&nbsp;в&nbsp;личный&nbsp;кабинет</a>
+						<a id="reg" href="http://maxi-mir.ru/registration" style="position:absolute; font-size:10px; top:30px; left:780px;">Регистрация</a>
+				</div>
+				
+				<div class="divTopMenu" id="idDivTopMenu">
+					<ul class="ulTopMenu">
+						<li id="idITopMenuShop" class=""><a href="/map">магазины</a></li>
+						<li id="idITopMenuRazvl" class="gray-blockMenu"><a href="/cinema/" id="razvl">развлечения</a></li>
+						<li id="idITopMenuSpec" class=""><a href="/bonus">спецпредложения</a></li>
+						<li id="idITopMenuNews" class=""><a href="/events">события</a></li>
+						<li id="idITopMenuInfo" class=""><a href="/info/partners" id="oTRC">о трц</a></li>
+					</ul>
+				</div>
+			</div>
+				<script type="text/javascript">
+					var isOpera = !!window.opera;
+					if (isOpera) { 
+						document.write("<style>.subMenuMap{top: -40px!important;</style>");
+					}
+				</script>
+				<!--[if IE 9]>
+					<style>
+						.subMenu{
+								top: 103px;
+						}
+						.ulTopSubMenu{
+							margin-right: 30px;
+						}
+					</style>
+				[endif]--> 
+			
+                         
+			<div class="subMenu" id="idSubMenu" style="visibility:visible;    "></div>
+			<div class="divTopSubMenu" id="idDivTopSubMenu">
+				<ul class="ulTopSubMenu" style="visibility:visible;">
+					<li><a style="text-decoration: none; font-weight: bold; color: black;" href="/cinema">3D Кинотеатр</a></li>
+					<li><a href="/rest/fitness">Alex Fitness</a></li>							
+					<li><a href="/map/304">Zамания</a></li> 
+					
+					<!--<li><a 
+					 
+					 
+					 
+					 
+					 
+					 
+					 
+					 
+					 -->
+					
+					
+					
+				</ul>
+			</div>
+                        <div class="divTopSubMenu2" id="idDivTopSubMenu2">
+				<ul class="ulTopSubMenu2" style="   ">
+					<li><a href="/info/partners">Описание ТРЦ</a></li>
+					<li><a href="/info/tenants">Арендаторам</a></li>
+					<li><a href="/info/advertisers">Рекламодателям</a></li>
+					<li><a href="/info/job">Вакансии</a></li>
+				</ul>
+			</div>        
+		
+	</span>
+	</div>
+	
+	<div class="subMenuMap" id="IdSubMenuMap" style=" ">
+		<div id="levels"><span class="padding"></span>
+		<a href="#" id="level0"><i>-</i>1 этаж</a><span class="padding"></span>
+		<a href="#" id="level1" class="active">1 этаж</a><span class="padding"></span>
+		<a href="#" id="level2">2 этаж</a><span class="padding"></span>
+		<a href="#" id="level3">3 этаж</a><span class="padding"></span>
+		<a href="#" id="level4">4 этаж</a>
+		</div>
+	</div>
+	
+</div>
+
+  
+</div>
+<div class="clear"></div>
+
+
+            <div class="l-content main">
+
+<script type="text/javascript">
+</script>
+
+<style type="text/css">
+    a.subActive {
+        background: url(../i/menu.png) 0 -551px repeat-x;
+        content: '';
+        z-index: 3;
+        zoom:0;
+    }
+    a.subActive:before {
+        display: inline-block;
+        position: relative;
+        width: 11px;
+        height: 22px;
+        margin-left: -11px;
+        margin-top: -4px;
+        vertical-align: top;
+        background: url(../i/menu.png) 0 -397px no-repeat;
+        content: '';
+        z-index: 3;
+        zoom:0;
+    }
+    a.subActive:after {
+        display: inline-block;
+        position:relative;
+        width: 11px;
+        height: 22px;
+        margin-right: -11px;
+        margin-top: -4px;
+        vertical-align: top;
+        background: url(../i/menu.png) -11px -397px no-repeat;
+        content: '';
+        z-index: 3;
+        zoom:0;
+    }
+</style>
+
+
+
+<script type="text/javascript">
+
+
+    $(function(){
+
+
+        $('.b-cinema-like-big').live("click", function(){
+            var id = $('input', this).val();
+            pointer = $(this);
+            count_wg = parseInt($('.b-cinema-like-big__num', this).text());
+
+            $.ajax({
+                url: '/cinema/incrating?id=' + id,
+                cache: false,
+                beforeSend: function() {
+
+                },
+                success: function(html){
+
+                    if (html != 0) {
+                        pointer.addClass('active');
+                        $('.b-cinema-like-big__text', pointer).text('Я иду');
+                        count_wg++;
+                        $('.b-cinema-like-big__num', pointer).text(count_wg);
+                    }
+
+                }
+            });
+
+            return false;
+
+        });
+
+
+    });
+
+</script>
+
+
+<div class="b-promo" style="background-image: none;">
+    <div class="shadow"></div>
+    <ul class="promo-image">
+
+        <li style="background-image: url('/files/promo/5/5d4203785f24087b597c3a93a8ad2cf32911.jpg');display:block;">
+			
+		</li>
+
+    </ul>
+    <div class="wave"></div>
+
+
+    <div class="cinema-dot"></div>
+
+</div>
+
+    <div class="h-box typical"><span class="wrp">
+    <div class="b-page-tab">
+    <ul>
+            <li><a href="/cinema" class="active"><span>Кинотеатр</span></a></li>
+            <li><i></i><a href="/cinema/timetable"><span>Расписание сеансов</span></a></li>
+            <li><i></i><a href="/cinema/afisha"><span>Анонсы и события</span></a></li>
+            <li><i></i><a href="/cinema/spec"><span>Спецпредложения</span></a></li>
+            <li><i></i><a href="/cinema/about"><span>О кинотеатре</span></a></li>
+    </ul>
+</div>
+
+        <div class="h-side-r">
+            <div class="l-col">
+            
+                
+                <div class="b-cinema-now">
+                    <div class="b-title">
+                        <span><h1>Сейчас в кино</h1></span><span class="b-cinema-date">03 июня </span><a href="/cinema/timetable" class="b-cinema-all">Расписание сеансов</a>
+                    </div>
+                        <form action="">
+                            <div class="b-cinema-filter">
+
+                                <div class="b-cinema-night">
+
+
+                                        <span class="b-cinema-night-now">
+                                            <div class="b-cinema-night-icon" title="Сегодня нет ночи кино"></div>
+                                        </span>
+
+                                    <span class="b-cinema-night-bobble" style="display: none;">
+
+                                        <i></i>
+                                        <p>Цена билета: <b> <span class="rur">Р</span></b></p>
+                                        <div class="closeBubble" id="closeTimeBubble"></div>
+                                    </span>
+
+                                </div>
+                                <div class="b-filter-slider">
+                                    <span class="b-filter-day">Афиша на <span class="b-day-select"><span></span></span></span>
+                                    <div id="dateFilter" style="display:none;position:absolute;z-index:1000;background: #1F3137;opacity:0.9;width:140px;top:12px;left:-103px;padding:5px">
+                                        <ul>
+                                            <li style="list-style:none;padding:5px 0;"><a href="/cinema/02-06-2019#afisha" data-date="1559509200"></a></li>
+                                            <li style="list-style:none;padding:5px 0;"><a href="/cinema/03-06-2019#afisha" data-date="1559595600"></a></li>
+                                            <li style="list-style:none;padding:5px 0;"><a href="/cinema/04-06-2019#afisha" data-date="1559682000"></a></li>
+                                            <li style="list-style:none;padding:5px 0;"><a href="/cinema/05-06-2019#afisha" data-date="1559768400"></a></li>
+                                            <li style="list-style:none;padding:5px 0;"><a href="/cinema/06-06-2019#afisha" data-date="1559854800"></a></li>
+                                            <li style="list-style:none;padding:5px 0;"><a href="/cinema/07-06-2019#afisha" data-date="1559941200"></a></li>
+                                            <li style="list-style:none;padding:5px 0;"><a href="/cinema/08-06-2019#afisha" data-date="1560027600"></a></li>
+                                            <li style="list-style:none;padding:5px 0;"><a href="/cinema/09-06-2019#afisha" data-date="1560114000"></a></li>
+                                            <li style="list-style:none;padding:5px 0;"><a href="/cinema/10-06-2019#afisha" data-date="1560200400"></a></li>
+                                        </ul>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $('.b-day-select').click(function(){
+                                        $(this).hide();
+                                        $('#dateFilter').fadeIn('fast');
+                                        return false;
+                                        });
+                                    </script>
+                                    <div class="layout-slider" id="sliderBlock">
+                                        <div class="slider-shadow"></div>
+                                        <div class="slider-icon"></div>
+                                        <input id="slider" type="slider" name="area" value="420;1680" style="display: none;"><span class="jslider jslider-limitless"><table><tbody><tr><td><div class="jslider-bg"><i class="l"><i></i></i><i class="r"><i></i></i><i class="v" style="left: 3.3%; width: 93.4%; background-position: -30.7656px 0px;"><i></i></i></div><div class="jslider-pointer" style="left: 3.3%;"><i></i></div><div class="jslider-pointer jslider-pointer-to" style="left: 96.7%;"><i></i></div><div class="jslider-label"><span>06:15</span></div><div class="jslider-label jslider-label-to"><span>04:45</span></div><div class="jslider-value" style="visibility: visible; left: 3.3%; margin-left: -15.774px; right: auto;"><span>07:00&nbsp;–&nbsp;04:00</span></div><div class="jslider-value jslider-value-to" style="visibility: hidden; left: auto; margin-left: 0px; right: 0px;"><span>04:00</span></div><div class="jslider-scale"><span style="left: 0%"><ins style="margin-left: -10px;">07:00</ins></span><span style="left: 14.3%"><ins style="margin-left: -10px;">10:00</ins></span><span style="left: 28.6%"><ins style="margin-left: -10px;">13:00</ins></span><span style="left: 42.900000000000006%"><ins style="margin-left: -10px;">16:00</ins></span><span style="left: 57.2%"><ins style="margin-left: -10px;">19:00</ins></span><span style="left: 71.5%"><ins style="margin-left: -10px;">22:00</ins></span><span style="left: 85.80000000000001%"><ins style="margin-left: -10px;">01:00</ins></span><span style="left: 100.10000000000001%"><ins style="margin-left: -10px;">04:00</ins></span></div></td></tr></tbody></table></span>
+                                    </div>
+                                    <link rel="stylesheet" type="text/css" href="js/jslider.css">
+
+                                    <script type="text/javascript" src="js/jquery.dependClass.js"></script>
+                                    <script type="text/javascript" src="js/jquery.slider-min.js"></script>
+
+                                    <script type="text/javascript" charset="utf-8">
+                                        var silderTimer;
+                                        var sliderCnt = 0;
+                                        $("#slider").slider({
+                                        from: 375,
+                                        to: 1725,
+                                        step: 15,
+                                        dimension: '',
+                                        scale: ['07:00', '10:00', '13:00', '16:00', '19:00', '22:00', '01:00', '04:00'],
+                                        limits: false,
+                                        calculate: function( value ){
+
+                                        var sliderPointerEl = $("#sliderBlock .jslider-pointer:first");
+                                
+                                        if(sliderPointerEl.length > 0) {
+                                            $("#sliderBlock .v").css({
+                                                backgroundPosition : ( sliderPointerEl.position().left * -1 + -15) + 'px 0px'
+                                            });
+                                        }
+                                        var hours = Math.floor( value / 60 );
+                                        var mins = ( value - hours * 60 );
+                                        if(hours >= 24) hours = hours - 24;
+
+                                        var time = $('#slider').val().split(';');
+                                        var fromHour =  Math.floor( time[0] / 60 );
+                                        var fromMinute = ( time[0] - fromHour * 60 );
+                                        if(fromHour >= 24) fromHour = fromHour - 24;
+
+                                        var toHour =  Math.floor( time[1] / 60 );
+                                        var toMinute = ( time[1] - toHour * 60 );
+                                        if(toHour >= 24) toHour = toHour - 24;
+
+                                        $('#fromInput').val((fromHour < 10 ? "0"+fromHour : fromHour) + ":" + ( fromMinute == 0 ? "00" : fromMinute ));
+                                        $('#toInput').val((toHour < 10 ? "0"+toHour : toHour) + ":" + ( toMinute == 0 ? "00" : toMinute ));
+
+                                        if(sliderCnt > 4) {
+                                        clearTimeout(silderTimer);
+                                        silderTimer = setTimeout(function(){
+
+                                        $('#cinemaResult').load('/cinema/filter', {date: 1559509200, from: time[0] * 60, to: time[1] * 60});
+
+                                        }, 100);
+                                        }
+
+                                        sliderCnt++;
+
+                                        return (hours < 10 ? "0" + hours : hours) + ":" + ( mins == 0 ? "00" : mins );
+                                        }
+                                        });
+
+                                    </script>
+
+                                    <div class="b-filter-range" style="display: none;">
+                                        Сеансы с  <input type="text" id="fromInput" value="07:00">  до <input type="text" id="toInput" value="04:00">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                        <div class="b-cinema-result" id="cinemaResult">	<div class="b-cinema-item">
+        <div class="b-cinema-poster">
+            <a href="/cinema/1946"><img src="/files/cinema/1946/115_66c33942c9b6ba48a432e6e662d2706f8051.jpg"></a>
+            <div class="b-cinema-rate" data-id="1946">39</div>
+            <div class="b-cinema-like">
+                <a href="#">
+                    <span class="b-cinema-like__text">Я пойду</span>
+                    <input type="hidden" value="1946">
+                    <span class="b-cinema-like__num">20</span>
+                </a>
+            </div>
+        </div>
+		<a href="/cinema/1946" class="b-cinema-title">Годзилла 2: Король монстров (16+) 2019</a>
+		<div class="b-cinema-item-time">
+			<div><em class="timeColor2">10:50</em> 190<span class="rur">Р</span></div>
+			<div><em class="timeColor3">15:05</em> 220<span class="rur">Р</span></div>
+			<div><em class="timeColor3">17:35</em> 270<span class="rur">Р</span></div>
+			<div><em class="timeColor4">20:05</em> 270<span class="rur">Р</span></div>
+			<div><em class="timeColor5">22:35</em> 270<span class="rur">Р</span></div>
+		</div>
+	</div>
+	<div class="b-cinema-item">
+        <div class="b-cinema-poster">
+            <a href="/cinema/1945"><img src="/files/cinema/1945/115_073721bfdd767bcec829bac37e4fd0982499.jpg"></a>
+            <div class="b-cinema-rate" data-id="1945">100</div>
+            <div class="b-cinema-like">
+                <a href="#">
+                    <span class="b-cinema-like__text">Я пойду</span>
+                    <input type="hidden" value="1945">
+                    <span class="b-cinema-like__num">82</span>
+                </a>
+            </div>
+        </div>
+		<a href="/cinema/1945" class="b-cinema-title">Тайная жизнь домашних животных 2 3D (6+) 2019 </a>
+		<div class="b-cinema-item-time">
+			<div><em class="timeColor1">08:30</em> 170/220<span class="rur">Р</span></div>
+			<div><em class="timeColor2">10:15</em> 220/270<span class="rur">Р</span></div>
+			<div><em class="timeColor2">12:00</em> 220/270<span class="rur">Р</span></div>
+			<div><em class="timeColor2">13:45</em> 270/330<span class="rur">Р</span></div>
+			<div><em class="timeColor3">15:30</em> 270/330<span class="rur">Р</span></div>
+			<div style="display:none;" class="hidden"><em class="timeColor3">17:15</em> 320/380<span class="rur">Р</span></div>
+			<div style="display:none;" class="hidden"><em class="timeColor4">19:00</em> 320/380<span class="rur">Р</span></div>
+			<div style="display:none;" class="hidden"><em class="timeColor4">20:45</em> 320/380<span class="rur">Р</span></div>
+			<div style="display:none;" class="hidden"><em class="timeColor5">22:30</em> 320/380<span class="rur">Р</span></div>
+			<div style="display:none;" class="hidden"><em class="timeColor5">00:15</em> 270/330<span class="rur">Р</span></div>
+			<span class="b-allseanse">Все сеансы</span>
+		</div>
+	</div>
+	<div class="b-cinema-item">
+        <div class="b-cinema-poster">
+            <a href="/cinema/1937"><img src="/files/cinema/1937/115_a1090c637020a38684325e17b1c480301817.jpg"></a>
+            <div class="b-cinema-rate" data-id="1937">141</div>
+            <div class="b-cinema-like">
+                <a href="#">
+                    <span class="b-cinema-like__text">Я пойду</span>
+                    <input type="hidden" value="1937">
+                    <span class="b-cinema-like__num">123</span>
+                </a>
+            </div>
+        </div>
+		<a href="/cinema/1937" class="b-cinema-title">Джон Уик 3 (18+) 2019 </a>
+		<div class="b-cinema-item-time">
+			<div><em class="timeColor2">11:20</em> 160/230<span class="rur">Р</span></div>
+		</div>
+	</div>
+	<div class="b-cinema-item">
+        <div class="b-cinema-poster">
+            <a href="/cinema/1947"><img src="/files/cinema/1947/115_d5ca13831b4d023bf4ed088bc195ca522861.jpg"></a>
+            <div class="b-cinema-rate" data-id="1947">28</div>
+            <div class="b-cinema-like">
+                <a href="#">
+                    <span class="b-cinema-like__text">Я пойду</span>
+                    <input type="hidden" value="1947">
+                    <span class="b-cinema-like__num">10</span>
+                </a>
+            </div>
+        </div>
+		<a href="/cinema/1947" class="b-cinema-title">Годзилла 2: Король монстров 3D  (16+) 2019</a>
+		<div class="b-cinema-item-time">
+			<div><em class="timeColor2">13:55</em> 270/330<span class="rur">Р</span></div>
+			<div><em class="timeColor3">16:25</em> 270/330<span class="rur">Р</span></div>
+			<div><em class="timeColor3">18:55</em> 320/380<span class="rur">Р</span></div>
+			<div><em class="timeColor4">21:25</em> 320/380<span class="rur">Р</span></div>
+			<div><em class="timeColor5">23:55</em> 270/330<span class="rur">Р</span></div>
+		</div>
+	</div>
+	<div class="b-cinema-item">
+        <div class="b-cinema-poster">
+            <a href="/cinema/1936"><img src="/files/cinema/1936/115_8b36b94c32990a967f20dc2502ed4d525793.jpg"></a>
+            <div class="b-cinema-rate" data-id="1936">99</div>
+            <div class="b-cinema-like">
+                <a href="#">
+                    <span class="b-cinema-like__text">Я пойду</span>
+                    <input type="hidden" value="1936">
+                    <span class="b-cinema-like__num">82</span>
+                </a>
+            </div>
+        </div>
+		<a href="/cinema/1936" class="b-cinema-title">Покемон. Детектив Пикачу (12+) 2019</a>
+		<div class="b-cinema-item-time">
+			<div><em class="timeColor3">16:05</em> 200<span class="rur">Р</span></div>
+		</div>
+	</div>
+	<div class="b-cinema-item">
+        <div class="b-cinema-poster">
+            <a href="/cinema/1942"><img src="/files/cinema/1942/115_eec7fa38716c2f637e704fb29ab055aa1609.jpg"></a>
+            <div class="b-cinema-rate" data-id="1942">109</div>
+            <div class="b-cinema-like">
+                <a href="#">
+                    <span class="b-cinema-like__text">Я пойду</span>
+                    <input type="hidden" value="1942">
+                    <span class="b-cinema-like__num">92</span>
+                </a>
+            </div>
+        </div>
+		<a href="/cinema/1942" class="b-cinema-title">Аладдин (6+) 2019 </a>
+		<div class="b-cinema-item-time">
+			<div><em class="timeColor1">09:50</em> 140<span class="rur">Р</span></div>
+			<div><em class="timeColor2">12:15</em> 190<span class="rur">Р</span></div>
+			<div><em class="timeColor2">14:40</em> 220<span class="rur">Р</span></div>
+			<div><em class="timeColor3">17:05</em> 270<span class="rur">Р</span></div>
+			<div><em class="timeColor4">19:30</em> 270<span class="rur">Р</span></div>
+			<div style="display:none;" class="hidden"><em class="timeColor4">21:55</em> 270<span class="rur">Р</span></div>
+			<div style="display:none;" class="hidden"><em class="timeColor5">00:20</em> 240<span class="rur">Р</span></div>
+			<span class="b-allseanse">Все сеансы</span>
+		</div>
+	</div>
+	<div class="b-cinema-item">
+        <div class="b-cinema-poster">
+            <a href="/cinema/1940"><img src="/files/cinema/1940/115_88d6329cfd634c1ec0322d22decd71ec9033.jpg"></a>
+            <div class="b-cinema-rate" data-id="1940">39</div>
+            <div class="b-cinema-like">
+                <a href="#">
+                    <span class="b-cinema-like__text">Я пойду</span>
+                    <input type="hidden" value="1940">
+                    <span class="b-cinema-like__num">22</span>
+                </a>
+            </div>
+        </div>
+		<a href="/cinema/1940" class="b-cinema-title">Гори, гори ясно (18+) 2019 </a>
+		<div class="b-cinema-item-time">
+			<div><em class="timeColor1">09:05</em> 120<span class="rur">Р</span></div>
+			<div><em class="timeColor2">13:20</em> 200<span class="rur">Р</span></div>
+			<div><em class="timeColor4">20:55</em> 250<span class="rur">Р</span></div>
+			<div><em class="timeColor5">23:25</em> 250<span class="rur">Р</span></div>
+		</div>
+	</div>
+	<div class="b-cinema-item">
+        <div class="b-cinema-poster">
+            <a href="/cinema/1944"><img src="/files/cinema/1944/115_1c4e30c7d45c1ebbb810741c36678d2c2706.jpg"></a>
+            <div class="b-cinema-rate" data-id="1944">141</div>
+            <div class="b-cinema-like">
+                <a href="#">
+                    <span class="b-cinema-like__text">Я пойду</span>
+                    <input type="hidden" value="1944">
+                    <span class="b-cinema-like__num">125</span>
+                </a>
+            </div>
+        </div>
+		<a href="/cinema/1944" class="b-cinema-title">Тайная жизнь домашних животных 2 (6+) 2019 </a>
+		<div class="b-cinema-item-time">
+			<div><em class="timeColor1">09:05</em> 140<span class="rur">Р</span></div>
+			<div><em class="timeColor1">09:35</em> 140/190<span class="rur">Р</span></div>
+			<div><em class="timeColor2">10:50</em> 190<span class="rur">Р</span></div>
+			<div><em class="timeColor2">11:30</em> 190<span class="rur">Р</span></div>
+			<div><em class="timeColor2">12:35</em> 190<span class="rur">Р</span></div>
+			<div style="display:none;" class="hidden"><em class="timeColor2">13:15</em> 220<span class="rur">Р</span></div>
+			<div style="display:none;" class="hidden"><em class="timeColor2">14:20</em> 220<span class="rur">Р</span></div>
+			<div style="display:none;" class="hidden"><em class="timeColor3">15:00</em> 220<span class="rur">Р</span></div>
+			<div style="display:none;" class="hidden"><em class="timeColor3">16:45</em> 220<span class="rur">Р</span></div>
+			<div style="display:none;" class="hidden"><em class="timeColor3">18:10</em> 270<span class="rur">Р</span></div>
+			<div style="display:none;" class="hidden"><em class="timeColor4">19:55</em> 270<span class="rur">Р</span></div>
+			<div style="display:none;" class="hidden"><em class="timeColor4">21:40</em> 270<span class="rur">Р</span></div>
+			<span class="b-allseanse">Все сеансы</span>
+		</div>
+	</div>
+	<div class="b-cinema-item">
+        <div class="b-cinema-poster">
+            <a href="/cinema/1943"><img src="/files/cinema/1943/115_683d1850b01a9c75bf9d77d65f0622356479.jpg"></a>
+            <div class="b-cinema-rate" data-id="1943">51</div>
+            <div class="b-cinema-like">
+                <a href="#">
+                    <span class="b-cinema-like__text">Я пойду</span>
+                    <input type="hidden" value="1943">
+                    <span class="b-cinema-like__num">36</span>
+                </a>
+            </div>
+        </div>
+		<a href="/cinema/1943" class="b-cinema-title">Аладдин 3D  (6+) 2019 </a>
+		<div class="b-cinema-item-time">
+			<div><em class="timeColor1">09:05</em> 170<span class="rur">Р</span></div>
+			<div><em class="timeColor3">18:30</em> 320<span class="rur">Р</span></div>
+			<div><em class="timeColor5">22:40</em> 320<span class="rur">Р</span></div>
+		</div>
+	</div>
+</div>
+                    </div>
+                </div>
+        </div>
+        <div class="l-side">
+        <!--
+<div class="b-contacts-bar m-contacts-bar-whiteblue">
+    <table>
+        <tr>
+            <td>
+                <div class="b-contacts-board">
+                    <ul>
+                        <li>
+                            <p>Бронирование</p>
+                            <span class="b-aicon phone"><i></i>(473) 2-333-777</span>
+                        </li>
+                        <li>
+                            <p>Отдел PR и рекламы</p>
+                            <span class="b-aicon phone"><i></i>(473) 2-333-272</span>
+                            <p class="b-contacts-email">E-mail: <a href="mailto:a.kazmina@maxi-mir.ru">a.kazmina@maxi-mir.ru</a></p>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+            <td>
+                <div class="b-contacts-pic">
+                    <img src="../i/contacts-cinema.jpg" alt="Кинотеатр Максимир">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="b-contacts-footer">
+                    <div class="b-contacts-hr"><i></i></div>
+                    <p>Сегодня кинотеатр работает</p>
+                    <a class="b-contacts-time" href="#">с <span>09:00</span> до окончания последнего сеанса</a>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div class="tl"></div>
+    <div class="tr"></div>
+    <div class="bl"></div>
+    <div class="br"></div>
+</div>
+-->
+        <!--
+<div class="b-title">
+    <h3>Расположение на карте</h3>
+</div>
+<div class="b-location">
+    <img src="../i/location/cinema.jpg" alt="Расположение на карте">
+</div>
+-->
+        <!--
+<div class="b-film-rate">
+    <div class="b-title">
+        <h3>Рейтинг фильмов</h3>
+    </div>
+    <table>
+        <colgroup width="60px"></colgroup>
+        <tr>
+            <td><span class="b-film-rate-top">1726</span></td>
+            <td>
+                <i>&mdash;</i><span class="b-film-rate-title">Т-34 (12+) 2018 </span>
+            </td>
+
+        </tr>
+        <tr>
+            <td><span class="b-film-rate-item">914</span></td>
+            <td>
+                <i>&mdash;</i><span class="b-film-rate-title">Полицейский с Рублёвки. Новогодний беспредел (16+) 2018 </span>
+            </td>
+
+        </tr>
+        <tr>
+            <td><span class="b-film-rate-item">910</span></td>
+            <td>
+                <i>&mdash;</i><span class="b-film-rate-title">Мстители: Финал (16+) 2019 </span>
+            </td>
+
+        </tr>
+        <tr>
+            <td><span class="b-film-rate-item">645</span></td>
+            <td>
+                <i>&mdash;</i><span class="b-film-rate-title">Мстители: Финал 3D (16+) 2019 </span>
+            </td>
+
+        </tr>
+        <tr>
+            <td><span class="b-film-rate-item">593</span></td>
+            <td>
+                <i>&mdash;</i><span class="b-film-rate-title">Как приручить дракона 3 (6+) 2018 </span>
+            </td>
+
+        </tr>
+    </table>
+</div>
+-->
+        
+            <div class="b-anonse-inf">
+
+
+    <div class="b-title">
+        <h3>Сейчас в кинотеатре</h3>
+    </div>
+    <dl id="anonseInfTabs" class="b-anonse-inf-tab">
+        <dt class="selected">
+            <span class="b-anonse-inf-img"><img src="/files/cinema/1944/74_1c4e30c7d45c1ebbb810741c36678d2c2706.jpg"></span>
+        </dt>
+        <dd class="selected">
+            <a href="/cinema/1944" class="b-anonse-inf-title">Тайная жизнь домашних животных 2 (6+) 2019 </a>
+            <div class="b-anonse-time">
+                <div class="b-anonse-time__title">Сеансы сегодня:</div>
+                <div class="next-time-inf">18:10</div>
+                <div class="next-time-inf">16:45</div>
+                <div class="next-time-inf">09:05</div>
+                <div class="next-time-inf">09:35</div>
+                <div class="next-time-inf">10:50</div>
+                <div class="next-time-inf">11:30</div>
+                <div class="next-time-inf">12:35</div>
+                <div class="next-time-inf">13:15</div>
+                <div class="next-time-inf">14:20</div>
+                <div class="next-time-inf">15:00</div>
+                <div class="next-time-inf">19:55</div>
+                <div class="next-time-inf">21:40</div>
+            </div>
+            <div class="b-cinema-like">
+                <a href="/cinema/1944">
+                    <span class="b-cinema-like__text">Я пойду</span>
+                    <input type="hidden" value="1944">
+                    <span class="b-cinema-like__num">125</span>
+                </a>
+            </div>
+        </dd>
+        <dt>
+            <span class="b-anonse-inf-img"><img src="/files/cinema/1944/74_1c4e30c7d45c1ebbb810741c36678d2c2706.jpg"></span>
+        </dt>
+        <dd>
+            <a href="/cinema/1944" class="b-anonse-inf-title">Тайная жизнь домашних животных 2 (6+) 2019 </a>
+            <div class="b-anonse-time">
+                <div class="b-anonse-time__title">Сеансы сегодня:</div>
+                <div class="next-time-inf">18:10</div>
+                <div class="next-time-inf">16:45</div>
+                <div class="next-time-inf">09:05</div>
+                <div class="next-time-inf">09:35</div>
+                <div class="next-time-inf">10:50</div>
+                <div class="next-time-inf">11:30</div>
+                <div class="next-time-inf">12:35</div>
+                <div class="next-time-inf">13:15</div>
+                <div class="next-time-inf">14:20</div>
+                <div class="next-time-inf">15:00</div>
+                <div class="next-time-inf">19:55</div>
+                <div class="next-time-inf">21:40</div>
+            </div>
+            <div class="b-cinema-like">
+                <a href="/cinema/1944">
+                    <span class="b-cinema-like__text">Я пойду</span>
+                    <input type="hidden" value="1944">
+                    <span class="b-cinema-like__num">125</span>
+                </a>
+            </div>
+        </dd>
+        <dt>
+            <span class="b-anonse-inf-img"><img src="/files/cinema/1942/74_eec7fa38716c2f637e704fb29ab055aa1609.jpg"></span>
+        </dt>
+        <dd>
+            <a href="/cinema/1942" class="b-anonse-inf-title">Аладдин (6+) 2019 </a>
+            <div class="b-anonse-time">
+                <div class="b-anonse-time__title">Сеансы сегодня:</div>
+                <div class="next-time-inf">09:50</div>
+                <div class="next-time-inf">12:15</div>
+                <div class="next-time-inf">14:40</div>
+                <div class="next-time-inf">17:05</div>
+                <div class="next-time-inf">19:30</div>
+                <div class="next-time-inf">21:55</div>
+                <div class="next-time-inf">00:20</div>
+            </div>
+            <div class="b-cinema-like">
+                <a href="/cinema/1942">
+                    <span class="b-cinema-like__text">Я пойду</span>
+                    <input type="hidden" value="1942">
+                    <span class="b-cinema-like__num">92</span>
+                </a>
+            </div>
+        </dd>
+    </dl>
+    <script type="text/javascript">
+        $(function(){
+            $('#anonseInfTabs dt').click(function(){
+                $(this)
+                        .siblings().removeClass('selected').end()
+                        .next('dd').andSelf().addClass('selected');
+            });
+        });
+    </script>
+</div>
+
+        </div>
+    </span></div>
+    <div class="b-hr-grey__t"></div>
+    <div class="b-anonse-bar">
+    </div>
+    <div class="b-hr-grey__b"></div>
+
+</div>
+<script type="text/javascript">
+    $('.b-allseanse').live('click', function() {
+    if($(this).parent().find('.hidden').is(':visible')){
+    $(this).parent().find('.hidden').slideUp('slow');
+    } else {
+    $(this).parent().find('.hidden').slideDown('slow');
+    };
+    return false;
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    		﻿<!--— Yandex.Metrika counter —--> 
+<script type="text/javascript"> 
+(function (d, w, c) { 
+(w[c] = w[c] || []).push(function() { 
+try { 
+w.yaCounter44896870 = new Ya.Metrika({ 
+id:44896870, 
+clickmap:true, 
+trackLinks:true, 
+accurateTrackBounce:true, 
+webvisor:true 
+}); 
+} catch(e) { } 
+}); 
+
+var n = d.getElementsByTagName("script")[0], 
+s = d.createElement("script"), 
+f = function () { n.parentNode.insertBefore(s, n); }; 
+s.type = "text/javascript"; 
+s.async = true; 
+s.src = "https://mc.yandex.ru/metrika/watch.js"; 
+
+if (w.opera == "[object Opera]") { 
+d.addEventListener("DOMContentLoaded", f, false); 
+} else { f(); } 
+})(document, window, "yandex_metrika_callbacks"); 
+</script> 
+<noscript><div><img src="https://mc.yandex.ru/watch/44896870" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+<!--— /Yandex.Metrika counter —-->
+<div class="clear"></div>
+<div class="l-footer">
+	<div class="line" style="margin-bottom:25px; "></div>
+    <div class="h-box"><span class="wrp">
+        <div class="b-copy">
+            <p>©&nbsp;Торгово-развлекательный центр «Максимир»</p>
+        </div>
+        <div class="b-social">
+            <p>
+                <span>Мы в социальных сетях:</span>
+                <!-- <a href="#" class="ok" title="Однокласники"></a>
+                <a href="#" class="fb" title="Facebook"></a> -->
+                <a href="http://vkontakte.ru/club18947722" class="vk" title="Вконтакте"></a>
+   <!--             <a href="http://www.facebook.com/trcMAXIMIR" class="fb" title="Facebook"></a>
+				<a href="http://twitter.com/Maxi_mir" class="tw" title="Twitter"></a>
+				<a href="http://www.odnoklassniki.ru/group/51598545846455/" class="ok" title="Однокласники"></a>
+ -->				
+            </p>
+        </div>
+        <div class="b-factory">
+			<div class="timeTextBotttom">
+			</div>
+			<a href="/info/partners/" id="linkPartner">Партнерам</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="http://maxi-mir.ru/info/job" id="linkVakans">Наши&nbsp;вакансии</a>
+			<!--<a href="#" id="linkGK">ГК&nbsp;«Мегион»</a>-->
+        </div>
+    </span></div>
+</div>
+        </div>
+    
+</body></html>
