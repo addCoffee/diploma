@@ -1,36 +1,29 @@
 import React, { Component } from "react";
 import { Spin } from "antd";
+import CardCinema from "./card-cinema.jsx";
 
 export default class PageGeneralSchedule extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isLoading: true,
-            data: {},
+            data: [],
         };
     }
 
     componentDidMount() {
-        this.props.cinemasApiClient.getSpartak().then(data => {
-            this.setState({ data: data, isLoading: false });
-            console.log(data);
+        this.props.cinemasApiClient.getGeneralSchedule().then(data => {
+            this.setState({ data: [...data], isLoading: false });
+            console.log("DATA", data);
         });
     }
 
-    renderSparta() {
-        let renderSchedule = [];
-        for (let key in this.state.data) {
-            let timeWindows = [];
-            for (let timeKey of this.state.data[key]) {
-                timeWindows.push(timeKey.time);
-            }
-            renderSchedule.push(
-                <div>
-                    {key}:{timeWindows}
-                </div>
-            );
-        }
-        return renderSchedule;
+    renderCinemaSchedule() {
+        let schedule = [];
+        this.state.data.forEach(cinema =>
+            schedule.push(<CardCinema name={cinema.cinema_name} schedule={cinema.schedule} />)
+        );
+        return schedule;
     }
 
     render() {
@@ -39,10 +32,10 @@ export default class PageGeneralSchedule extends Component {
         }
 
         return (
-            <div>
-                Xexe
-                {this.renderSparta()}
-            </div>
+            <>
+                <h1>Киноафиша</h1>
+                <div className="general-schedule">{this.renderCinemaSchedule()}</div>
+            </>
         );
     }
 }

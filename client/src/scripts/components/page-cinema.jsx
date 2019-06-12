@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { Spin } from "antd";
+import { Link } from "react-router-dom";
 
 export default class PageCinema extends Component {
     constructor(props) {
         super(props);
+        this.currentTime = new Date(Date.now()).toTimeString().slice(0, 5);
         this.state = {
             isLoading: true,
             cinema_name: "",
@@ -21,7 +23,17 @@ export default class PageCinema extends Component {
     renderScheduleFilm(schedule_film) {
         let schedule = [];
         schedule_film.forEach(item => {
-            schedule.push(<li className="film-schedule__item-time">{item.time}</li>);
+            schedule.push(
+                <li
+                    className={
+                        item.time > this.currentTime || item.time.startsWith("00:")
+                            ? "film-schedule__item-time"
+                            : "film-schedule__item-time film-schedule__item-time--disabled"
+                    }
+                >
+                    {item.time}
+                </li>
+            );
         });
         return <ul className="film-content__film-schedule film-schedule">{schedule}</ul>;
     }
@@ -33,7 +45,7 @@ export default class PageCinema extends Component {
                 <div className="film-billboard">
                     <div className="film-billboard__name">{item.film_name}</div>
                     <div className="film-billboard__film-content film-content">
-                        <img className="film-content__image" src={item.film_image} />
+                        <img className="film-content__image" alt="picture" src={item.film_image} />
                         {this.renderScheduleFilm(item.film_schedule)}
                     </div>
                 </div>
@@ -49,7 +61,10 @@ export default class PageCinema extends Component {
 
         return (
             <div className="cinema-billboard">
-                <h1 className="cinema-billboard__title">Cinema {this.state.cinema_name}</h1>
+                <h1 className="cinema-billboard__title">Кинотеатр {this.state.cinema_name}</h1>
+                <div>
+                    <Link to={`/cinemas/${this.props.match.params.cinemaId}/contacts`}>Pam</Link>
+                </div>
                 <div className="cinema-billboard__films">{this.renderSchedule()}</div>
             </div>
         );

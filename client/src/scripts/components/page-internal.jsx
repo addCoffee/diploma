@@ -10,10 +10,12 @@ import TopBar from "./top-bar.jsx";
 
 import PageAdmin from "./page-admin.jsx";
 import PageCinema from "./page-cinema.jsx";
+import PageCinemaContacts from "./page-cinema-contacts.jsx";
 
 const { Header, Content } = Layout;
 const TopBarWithRouter = withRouter(TopBar);
 const PageCinemaWithRouter = withRouter(PageCinema);
+const PageCinemaContactsWithRouter = withRouter(PageCinemaContacts);
 
 export default class PageInternal extends React.Component {
     constructor(props) {
@@ -44,6 +46,13 @@ export default class PageInternal extends React.Component {
                                 exact
                                 path="/cinemas/:cinemaId"
                                 component={() => <PageCinemaWithRouter cinemasApiClient={this.cinemasApiClient} />}
+                            />
+                            <Route
+                                exact
+                                path="/cinemas/:cinemaId/contacts"
+                                component={() => (
+                                    <PageCinemaContactsWithRouter cinemasApiClient={this.cinemasApiClient} />
+                                )}
                             />
                         </div>
                     </Content>

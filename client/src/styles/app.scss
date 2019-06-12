@@ -2,6 +2,8 @@
 @import "./antd-fix.scss";
 @import "./top-bar.scss";
 @import "./cinema.scss";
+@import "./page-general-schedule.scss";
+@import "./page-cinema-contacts.scss";
 
 .layout {
     min-height: 100vh;
@@ -31,4 +33,16 @@
     display: flex;
     justify-content: center;
     margin: 50px;
+}
+
+.xzz {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.maps {
+    width: 500px;
+    height: 350px;
 }

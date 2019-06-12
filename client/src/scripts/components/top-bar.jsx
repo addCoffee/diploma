@@ -26,19 +26,19 @@ export default class TopBar extends React.Component {
     }
     render() {
         let menuItems = [];
-        menuItems.push(this.renderMenuItem("Schedule", "/"));
-        menuItems.push(this.renderMenuItem("Cinemas", "/cinemas"));
+        menuItems.push(this.renderMenuItem("Расписание", "/"));
+        menuItems.push(this.renderMenuItem("Кинотеатры", "/cinemas"));
         if (this.props.userData.isAdmin) {
             const subMenuItems = [this.renderMenuItem("Performance reviews", "/admin")];
             menuItems.push(
-                <SubMenu key={"/admin"} className="menu__item" style={adminStyles} title={<span>Admin</span>}>
+                <SubMenu key={"/admin"} className="menu__item" style={adminStyles} title={<span>Админ</span>}>
                     {subMenuItems}
                 </SubMenu>
             );
         }
         return (
             <>
-                <div className="logo top-bar__logo">CinemaAMM</div>
+                <div className="logo top-bar__logo">КиноПММ</div>
                 <Menu
                     theme="dark"
                     mode="horizontal"

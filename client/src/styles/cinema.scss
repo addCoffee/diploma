@@ -51,5 +51,10 @@
         margin: 5px 10px;
         height: 25px;
         font-weight: 450;
+        &--disabled {
+            color: #abaaaa;
+            cursor: auto;
+            text-decoration: none;
+        }
     }
 }

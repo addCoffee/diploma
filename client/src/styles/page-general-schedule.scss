@@ -1,0 +1,46 @@
+.general-schedule {
+    &__cinema-name {
+        margin: 10px 0px 10px 0px;
+    }
+    &__cinema {
+        font-size: 12px;
+    }
+}
+
+.card-film {
+    border: 2px solid #f6f6f6;
+    border-bottom: none;
+    color: #000;
+    width: 100%;
+    display: flex;
+    &__name-film {
+        padding: 5px;
+        min-width: 50%;
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+.card-film:last-child {
+    border-bottom: 2px solid #f6f6f6;
+}
+
+.schedule-film {
+    list-style-type: none;
+    padding: 5px;
+    margin: 0px;
+    margin-left: 10px;
+    text-decoration: underline;
+    cursor: pointer;
+    display: flex;
+    flex-wrap: wrap;
+    &__time {
+        margin: 7px;
+        &--disabled {
+            color: #abaaaa;
+            cursor: auto;
+            text-decoration: none;
+        }
+    }
+}
