@@ -3,8 +3,16 @@
         margin: 10px 0px 10px 0px;
     }
     &__cinema {
+        border: 2px solid #eee;
         font-size: 12px;
+        border-radius: 7px;
+        overflow: hidden;
     }
+}
+
+.general-schedule-header {
+    display: flex;
+    justify-content: space-between;
 }
 
 .card-film {
@@ -17,8 +25,10 @@
         padding: 5px;
         min-width: 50%;
         width: 50%;
+        color: #f60;
+        max-width: 300px;
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
     }
 }
@@ -31,16 +41,16 @@
     padding: 5px;
     margin: 0px;
     margin-left: 10px;
-    text-decoration: underline;
     cursor: pointer;
     display: flex;
     flex-wrap: wrap;
     &__time {
+        text-decoration: underline;
         margin: 7px;
         &--disabled {
+            text-decoration: none;
             color: #abaaaa;
             cursor: auto;
-            text-decoration: none;
         }
     }
 }

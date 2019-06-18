@@ -5,7 +5,12 @@ export default class CardCinema extends Component {
     renderCinema() {
         let cinema = [];
         this.props.schedule.forEach(film =>
-            cinema.push(<CardFilm name={film.film_name} schedule={film.film_schedule} />)
+            cinema.push(
+                <CardFilm
+                    name={this.props.idSelected === "cinemas" ? film.film_name : film.cinema_name}
+                    schedule={this.props.idSelected === "cinemas" ? film.film_schedule : film.schedule}
+                />
+            )
         );
         return cinema;
     }

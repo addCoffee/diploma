@@ -1,0 +1,37 @@
+.recomendation {
+    margin-top: 15px;
+    border: 2px solid #f60;
+    border-radius: 5px;
+    padding: 5px;
+    &__ul {
+        display: flex;
+        justify-content: space-around;
+        margin: 0px;
+        padding: 0px;
+        list-style-type: none;
+    }
+}
+
+.recomendation-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    &__card-film {
+        margin: 0px 10px 10px 10px;
+        width: 150px;
+        height: 100%;
+    }
+}
+
+.meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px !important;
+    width: 130px;
+}
+
+/*.ant-card-body {
+    display: flex;
+    align-items: center;
+}*/

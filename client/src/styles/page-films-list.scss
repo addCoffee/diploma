@@ -1,0 +1,38 @@
+.film-content {
+    margin: 10px 0px 0px 0px;
+    display: flex;
+    &__image {
+        margin: 0px 10px 0px 0px;
+        width: 140px;
+        height: 200px;
+    }
+
+    &__film-schedule {
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        flex-direction: column;
+        height: 200px;
+    }
+}
+
+.films-list {
+    font-size: 14px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    &__card-film {
+        margin: 0px 10px 10px 10px;
+        width: 180px;
+        height: 95%;
+    }
+}
+
+.meta {
+    text-align: center;
+    width: 160px;
+}
+
+.ant-card-meta {
+    margin: 0px !important;
+}

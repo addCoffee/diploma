@@ -12,6 +12,8 @@ export default class TopBar extends React.Component {
             return ["/admin"];
         } else if (path.startsWith("/cinemas")) {
             return ["/cinemas"];
+        } else if (path.startsWith("/films")) {
+            return ["/films"];
         } else if (path.startsWith("/")) {
             return ["/"];
         }
@@ -28,14 +30,16 @@ export default class TopBar extends React.Component {
         let menuItems = [];
         menuItems.push(this.renderMenuItem("Расписание", "/"));
         menuItems.push(this.renderMenuItem("Кинотеатры", "/cinemas"));
-        if (this.props.userData.isAdmin) {
+        menuItems.push(this.renderMenuItem("Фильмы", "/films"));
+        menuItems.push(this.renderMenuItem("Админ", "/admin"));
+        /*if (this.props.userData.isAdmin) {
             const subMenuItems = [this.renderMenuItem("Performance reviews", "/admin")];
             menuItems.push(
                 <SubMenu key={"/admin"} className="menu__item" style={adminStyles} title={<span>Админ</span>}>
                     {subMenuItems}
                 </SubMenu>
             );
-        }
+        }*/
         return (
             <>
                 <div className="logo top-bar__logo">КиноПММ</div>

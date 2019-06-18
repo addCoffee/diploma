@@ -1,45 +1,72 @@
 import React, { Component } from "react";
-import { YMaps, Map, GeoObject } from "react-yandex-maps";
+import { YMaps, Map, GeoObject, ZoomControl, RouteButton, FullscreenControl } from "react-yandex-maps";
+import { Spin } from "antd";
 
 export default class PageCinemaContacts extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isLoading: true,
-            coords: [],
+            data: { coords: [0, 0] },
         };
     }
 
     componentDidMount() {
-        this.props.cinemasApiClient.getGeneralSchedule().then(data => {
-            const elemFinded = data.find(cinema => {
-                console.log(cinema.cinema_url, this.props.match.params.cinemaId);
-                return cinema.cinema_name == this.props.match.params.cinemaId;
-            });
-            console.log("elem", elemFinded);
-
-            this.setState({ coords: elemFinded.coords, isLoading: false });
-            console.log("DATA", data);
+        this.props.cinemasApiClient.getSpartakContact().then(data => {
+            this.setState({ data: { ...data }, isLoading: false });
         });
     }
 
+    renderContacts() {
+        console.log(this.state.data);
+        let contacts = [];
+        this.state.data.contacts.forEach(item => {
+            contacts.push(
+                <li key={item.mean} className="contacts-list__contact-item">
+                    <b>{item.text}</b> {item.mean}
+                </li>
+            );
+        });
+        return <ul className="cinema-contacts__contacts-list contacts-list">{contacts}</ul>;
+    }
+
     render() {
-        console.log(this.props.match.params.cinemaId);
+        if (this.state.isLoading) {
+            return <Spin className="spin-loading" size="large" />;
+        }
+
         return (
-            <YMaps>
-                <Map className="maps" defaultState={{ center: this.state.coords, zoom: 16 }}>
-                    <GeoObject
-                        geometry={{
-                            type: "Point",
-                            coordinates: this.state.coords,
-                        }}
-                        properties={{
-                            // Контент метки.
-                            iconContent: "Я тащусь",
-                        }}
-                    />
-                </Map>
-            </YMaps>
+            <>
+                <h1>Кинотеатр Спартак</h1>
+                <div className="cinema-contacts">
+                    <YMaps>
+                        <Map className="maps" defaultState={{ center: this.state.data.coords, zoom: 16 }}>
+                            <FullscreenControl />
+                            <RouteButton options={{ float: "right" }} />
+                            <ZoomControl
+                                options={{
+                                    size: "small",
+                                    zoomDuration: 1000,
+                                }}
+                            />
+                            <GeoObject
+                                geometry={{
+                                    type: "Point",
+                                    coordinates: this.state.data.coords,
+                                }}
+                                properties={{
+                                    // Контент метки.
+                                    iconContent: this.state.data.address,
+                                }}
+                                options={{
+                                    preset: "islands#blackStretchyIcon",
+                                }}
+                            />
+                        </Map>
+                    </YMaps>
+                    {this.renderContacts()}
+                </div>
+            </>
         );
     }
 }

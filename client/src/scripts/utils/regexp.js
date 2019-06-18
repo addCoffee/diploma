@@ -13,6 +13,9 @@ const nextDay = new Date(Date.now() + 86400000).toLocaleString("ru", {
     day: "numeric",
 });
 
+const st =
+    'data-gtm-list-item-filmName="(.*?)"|<span class="shedule_session_time">s+([0-9]{2}:[0-9]{2})|<img class="shedule_movie_img" src="(https://.*?.kinoteatr.ru/preview6/upload/.*?.jpg)">|data-gtm-list-item-genre="([а-я, ]+)"|raiting_sub">([0-9]++)</i>|"title">([0-3] ч. [0-9]+ мин.)</span>|shedule_movie_text">[а-яА-Яёa-zA-Z() ]+</span>';
+
 const regExpCinemas = [
     {
         name: "spartak",

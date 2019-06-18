@@ -15,7 +15,6 @@ export default class PageCinema extends Component {
 
     componentDidMount() {
         this.props.cinemasApiClient.getCinema(this.props.match.params.cinemaId).then(res => {
-            console.log(res, "res");
             this.setState({ cinema_name: res.cinema_name, schedule: res.schedule, isLoading: false });
         });
     }
@@ -25,6 +24,7 @@ export default class PageCinema extends Component {
         schedule_film.forEach(item => {
             schedule.push(
                 <li
+                    title={item.room}
                     className={
                         item.time > this.currentTime || item.time.startsWith("00:")
                             ? "film-schedule__item-time"
@@ -61,9 +61,11 @@ export default class PageCinema extends Component {
 
         return (
             <div className="cinema-billboard">
-                <h1 className="cinema-billboard__title">Кинотеатр {this.state.cinema_name}</h1>
-                <div>
-                    <Link to={`/cinemas/${this.props.match.params.cinemaId}/contacts`}>Pam</Link>
+                <div className="cinema-billboard__header-cinema header-cinema">
+                    <h1>Кинотеатр {this.state.cinema_name}</h1>
+                    <div className="header-cinema__contacts">
+                        <Link to={`/cinemas/${this.props.match.params.cinemaId}/contacts`}>Контакты</Link>
+                    </div>
                 </div>
                 <div className="cinema-billboard__films">{this.renderSchedule()}</div>
             </div>

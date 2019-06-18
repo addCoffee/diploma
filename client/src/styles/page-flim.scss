@@ -1,0 +1,35 @@
+.page-film {
+    display: flex;
+    &__info {
+        color: #000;
+        margin: 0px;
+        padding: 0px;
+        list-style-type: none;
+    }
+    &__image {
+        width: 140px;
+    }
+}
+
+.info {
+    &__item {
+        margin: 0px 0px 10px 10px;
+        p {
+            margin: 0px;
+        }
+    }
+}
+
+.page-film-schedule {
+    padding: 0px;
+    margin-top: 15px;
+    border: 2px solid #eee;
+    //font-size: 12px;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.card-schedule {
+    margin-left: 0px;
+    padding-left: 0px;
+}

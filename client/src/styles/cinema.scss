@@ -7,6 +7,30 @@
         display: flex;
         flex-wrap: wrap;
     }
+    &__header-cinema {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px;
+    }
+}
+
+.header-cinema {
+    a {
+        color: #000;
+    }
+    &__contacts {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+        border: 1px solid #abaaaa;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: 550;
+        background-color: #eee;
+        color: #000;
+    }
 }
 
 .film-billboard {
