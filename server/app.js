@@ -17,8 +17,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.get("/spartak", (req, res) => {
-    //requestCinemaDataCache("spartak", res);
-    requestCinemaData("http://kinospartak.ru/", "./src/source-htmls/spartak.html", res);
+    requestCinemaDataCache("spartak", res);
+    // requestCinemaData("http://kinospartak.ru/", "./src/source-htmls/spartak.html", res);
 });
 
 app.get("/maximir", (req, res) => {
