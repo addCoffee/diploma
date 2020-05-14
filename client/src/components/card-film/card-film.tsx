@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-export default class CardFilm extends Component {
+export default class CardFilm extends Component<any, any> {
   currentTime = new Date(Date.now()).toTimeString().slice(0, 5);
 
   renderSchedule() {

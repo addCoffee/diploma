@@ -2,14 +2,11 @@ import React, { Component } from "react";
 import { YMaps, Map, GeoObject, ZoomControl, RouteButton, FullscreenControl } from "react-yandex-maps";
 import { Spin } from "antd";
 
-export default class PageCinemaContacts extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: true,
-      data: { coords: [0, 0] },
-    };
-  }
+export default class PageCinemaContacts extends Component<any, any> {
+  state: {isLoading: boolean, data: {coords: number[], address?: any, contacts?: any}} = {
+    isLoading: true,
+    data: { coords: [0, 0] },
+  };
 
   componentDidMount() {
     this.props.cinemasApiClient.getSpartakContact().then(data => {

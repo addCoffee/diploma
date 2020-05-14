@@ -1,18 +1,15 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Route, HashRouter, withRouter } from "react-router-dom";
 import { Layout } from "antd";
-import CinemasApiClient from "../services/api/cinemas-api-client";
-
-import PageGeneralSchedule from "./page-general-schedule.jsx";
-import PageCinemasList from "./page-cinemas-list.jsx";
-import TopBar from "./top-bar.jsx";
-
-import PageAdmin from "./page-admin.jsx";
-import PageCinema from "./page-cinema.jsx";
-import PageCinemaContacts from "./page-cinema-contacts.jsx";
-import PageFilmsList from "./page-films-list.jsx";
-import PageFilm from "./page-film.jsx";
+import TopBar from "../top-bar/top-bar";
+import PageCinema from "../pages/page-cinema";
+import PageCinemaContacts from "../pages/page-cinema-contacts";
+import PageFilm from "../pages/page-film";
+import PageGeneralSchedule from "../pages/page-general-schedule";
+import PageCinemasList from "../pages/page-cinemas-list";
+import PageAdmin from "../pages/page-admin";
+import PageFilmsList from "../pages/page-films-list";
+import CinemasApiClient from "../../services/api/cinemas-api-client";
 
 const { Header, Content } = Layout;
 const TopBarWithRouter = withRouter(TopBar);
@@ -20,12 +17,9 @@ const PageCinemaWithRouter = withRouter(PageCinema);
 const PageCinemaContactsWithRouter = withRouter(PageCinemaContacts);
 const PageFilmWithRouter = withRouter(PageFilm);
 
-export default class PageInternal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.cinemasApiClient = new CinemasApiClient();
-    this.state = {};
-  }
+export default class Root extends React.Component<any, any> {
+  cinemasApiClient = new CinemasApiClient();
+  state = {};
 
   componentDidMount() { }
 
@@ -74,7 +68,3 @@ export default class PageInternal extends React.Component {
     );
   }
 }
-
-PageInternal.propTypes = {
-  userData: PropTypes.object.isRequired,
-};

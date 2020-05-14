@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import CardFilm from "../card-film/card-film.jsx";
+import CardFilm from "../card-film/card-film";
 
-export default class CardCinema extends Component {
+export default class CardCinema extends Component<any, any> {
   renderCinema() {
     let cinema = [];
     this.props.schedule.forEach(film =>

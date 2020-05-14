@@ -1,19 +1,16 @@
 import React, { Component } from "react";
 import { Spin, Select } from "antd";
-import CardCinema from "../card-cinema/card-cinema.jsx";
+import CardCinema from "../card-cinema/card-cinema";
 
 const { Option } = Select;
 
-export default class PageGeneralSchedule extends Component {
-  constructor(props) {
-    super(props);
-    this.defaultData = [];
-    this.state = {
-      isLoading: true,
-      data: [],
-      idSelected: "cinemas",
-    };
-  }
+export default class PageGeneralSchedule extends Component<any, any> {
+  defaultData = [];
+  state = {
+    isLoading: true,
+    data: [],
+    idSelected: "cinemas",
+  };
 
   componentDidMount() {
     this.props.cinemasApiClient
@@ -23,7 +20,7 @@ export default class PageGeneralSchedule extends Component {
         this.setState({ data: [...data], isLoading: false });
       })
       .catch(err => {
-        console.log(err);
+        console.warn(err);
       });
   }
 
@@ -44,9 +41,9 @@ export default class PageGeneralSchedule extends Component {
   transformDataforFilm = () => {
     let newData = [];
     this.defaultData.forEach(cinema => {
-      let objFilm = {};
+      let objFilm:any = {};
       objFilm["cinema_schedule"] = [];
-      let objCinema = {};
+      let objCinema: any = {};
       objCinema["cinema_name"] = cinema.cinema_name;
       cinema.schedule.forEach(film => {
         objFilm = {};

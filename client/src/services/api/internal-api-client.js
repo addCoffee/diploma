@@ -9,7 +9,6 @@ export default class InternalApiClient {
     doInternalRequest() {}
 
     mockInternalRequest(getData) {
-        console.log(users)
         const user = users.find(item => item.id === Number(localStorage.getItem("_user")));
         if (!user) {
             this._onAuthRequired();

@@ -1,4 +1,4 @@
-import users from "./mocks/admins";
+import {users} from "./mocks/admins";
 
 export default class AuthApiClient {
     getCurrentUserInfo() {

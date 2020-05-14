@@ -1,11 +1,11 @@
 @import "../node_modules/antd/dist/antd.css";
-@import "./components/header/header.scss";
+@import "./components/top-bar/top-bar.scss";
 @import "./styles/cinema.scss";
 @import "./styles/page-general-schedule.scss";
 @import "./styles/page-cinema-contacts.scss";
 @import "./styles/page-films-list.scss";
 @import "./styles/page-flim.scss";
-@import "./styles/recomendation.scss";
+@import "./components/recomendation/recomendation.scss";
 
 .layout {
     min-height: 100vh;

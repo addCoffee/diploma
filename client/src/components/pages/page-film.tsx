@@ -1,17 +1,13 @@
 import React, { Component } from "react";
 import { Spin } from "antd";
+import Recomendation from "../recomendation/recomendation";
 
-import Recomendation from "../recomendation/recomendation.jsx";
-
-export default class PageFilm extends Component {
-  constructor(props) {
-    super(props);
-    this.currentTime = new Date(Date.now()).toTimeString().slice(0, 5);
-    this.state = {
-      isLoading: true,
-      film: {},
-    };
-  }
+export default class PageFilm extends Component<any, any> {
+  currentTime = new Date(Date.now()).toTimeString().slice(0, 5);
+  state: {isLoading: boolean, film: any} = {
+    isLoading: true,
+    film: {},
+  };
 
   componentDidMount() {
     //console.log(typeof this.props.match.params.filmId);

@@ -4,15 +4,12 @@ import { Spin, Card } from "antd";
 
 const { Meta } = Card;
 
-export default class Recomendation extends Component {
-  constructor(props) {
-    super(props);
-    this.currentTime = new Date(Date.now()).toTimeString().slice(0, 5);
-    this.state = {
-      isLoading: true,
-      data: [],
-    };
-  }
+export default class Recomendation extends Component<any, any> {
+  currentTime = new Date(Date.now()).toTimeString().slice(0, 5);
+  state = {
+    isLoading: true,
+    data: [],
+  };
 
   componentDidMount() {
     //console.log(typeof this.props.match.params.filmId);
@@ -31,7 +28,7 @@ export default class Recomendation extends Component {
   }
 
   renderRecomenadtions() {
-    const countrecomendationFilms = 4;
+    const countRecomendations = 4;
     let recomendationFilms = [];
     const genreFound = this.state.data.find(item => item.id === this.props.id).film_genre;
     this.state.data.forEach(item => {
@@ -45,7 +42,7 @@ export default class Recomendation extends Component {
             }
           });
         });
-        if (countSimilarGenre !== 0 && recomendationFilms.length < countrecomendationFilms) {
+        if (countSimilarGenre !== 0 && recomendationFilms.length < countRecomendations) {
           const url = `/films/${item.id}`;
           recomendationFilms.push(
             <li>

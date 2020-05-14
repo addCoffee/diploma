@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const SubMenu = Menu.SubMenu;
 const adminStyles = { padding: "0px 0px" };
 
-export default class Header extends React.Component {
+export default class TopBar extends React.Component<any, any> {
   getSelectedKeys() {
     const path = this.props.location.pathname;
     if (path.startsWith("/admin")) {

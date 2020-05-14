@@ -4,14 +4,11 @@ import { Link } from "react-router-dom";
 
 const { Meta } = Card;
 
-export default class PageFilmsList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: true,
-      data: [],
-    };
-  }
+export default class PageFilmsList extends Component<any, any> {
+  state = {
+    isLoading: true,
+    data: [],
+  };
 
   componentDidMount() {
     this.props.cinemasApiClient

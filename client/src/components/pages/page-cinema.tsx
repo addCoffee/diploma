@@ -2,16 +2,13 @@ import React, { Component } from "react";
 import { Spin } from "antd";
 import { Link } from "react-router-dom";
 
-export default class PageCinema extends Component {
-  constructor(props) {
-    super(props);
-    this.currentTime = new Date(Date.now()).toTimeString().slice(0, 5);
-    this.state = {
-      isLoading: true,
-      cinema_name: "",
-      schedule: [],
-    };
-  }
+export default class PageCinema extends Component<any, any> {
+  currentTime = new Date(Date.now()).toTimeString().slice(0, 5);
+  state = {
+    isLoading: true,
+    cinema_name: "",
+    schedule: [],
+  };
 
   componentDidMount() {
     this.props.cinemasApiClient.getCinema(this.props.match.params.cinemaId).then(res => {
