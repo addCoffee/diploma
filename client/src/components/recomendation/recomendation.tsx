@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Spin, Card } from "antd";
 
-const { Meta } = Card;
+const {Meta} = Card;
 
-export default class Recomendation extends Component<any, any> {
+export default class Recomendation extends React.Component<any, any> {
   currentTime = new Date(Date.now()).toTimeString().slice(0, 5);
   state = {
     isLoading: true,
@@ -12,25 +12,15 @@ export default class Recomendation extends Component<any, any> {
   };
 
   componentDidMount() {
-    //console.log(typeof this.props.match.params.filmId);
-    this.props.cinemasApiClient
-      .getFilms()
-      .then(data => {
-        //console.log(data);
-        this.setState({
-          data: [...data],
-          isLoading: false,
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    this.props.cinemasApiClient.getFilms()
+      .then(data => this.setState({data, isLoading: false}))
+      .catch((err: string) => console.warn(err));
   }
 
-  renderRecomenadtions() {
+  renderRecomendations() {
     const countRecomendations = 4;
     let recomendationFilms = [];
-    const genreFound = this.state.data.find(item => item.id === this.props.id).film_genre;
+    const genreFound = this.state.data.find(({id}) => id === this.props.id).film_genre;
     this.state.data.forEach(item => {
       let countSimilarGenre = 0;
       if (item.film_genre !== undefined && item.id !== this.props.id) {
@@ -65,7 +55,6 @@ export default class Recomendation extends Component<any, any> {
   }
 
   render() {
-    console.log(this.state.data);
     if (this.state.isLoading) {
       return <Spin className="spin-loading" size="large" />;
     }
@@ -73,7 +62,7 @@ export default class Recomendation extends Component<any, any> {
     return (
       <div className="recomendation">
         <h3 className="recomendation__title">Вам может понравиться</h3>
-        {this.renderRecomenadtions()}
+        {this.renderRecomendations()}
       </div>
     );
   }

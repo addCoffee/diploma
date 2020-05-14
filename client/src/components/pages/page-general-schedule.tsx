@@ -9,48 +9,42 @@ export default class PageGeneralSchedule extends Component<any, any> {
   state = {
     isLoading: true,
     data: [],
-    idSelected: "cinemas",
+    selectedId: "cinemas",
   };
 
   componentDidMount() {
-    this.props.cinemasApiClient
-      .getGeneralSchedule()
+    this.props.cinemasApiClient.getGeneralSchedule()
       .then(data => {
         this.defaultData = [...data];
         this.setState({ data: [...data], isLoading: false });
       })
-      .catch(err => {
-        console.warn(err);
-      });
+      .catch(err =>  console.warn(err));
   }
 
-  renderSchedule = idSelected => {
-    let schedule = [];
-    this.state.data.forEach(item => {
-      schedule.push(
-        <CardCinema
-          idSelected={idSelected}
-          name={idSelected === "cinemas" ? item.cinema_name : item.film_name}
-          schedule={idSelected === "cinemas" ? item.schedule : item.cinema_schedule}
-        />
-      );
-    });
-    return schedule;
+  renderSchedule = () => {
+    const {selectedId} = this.state;
+    return this.state.data.map(item => (
+      <CardCinema
+        selectedId={selectedId}
+        name={selectedId === "cinemas" ? item.cinema_name : item.film_name}
+        schedule={selectedId === "cinemas" ? item.schedule : item.cinema_schedule}
+      />
+    ));
   };
 
-  transformDataforFilm = () => {
+  transformDataForFilm = () => {
     let newData = [];
     this.defaultData.forEach(cinema => {
       let objFilm:any = {};
-      objFilm["cinema_schedule"] = [];
+      objFilm.cinema_schedule = [];
       let objCinema: any = {};
-      objCinema["cinema_name"] = cinema.cinema_name;
+      objCinema.cinema_name = cinema.cinema_name;
       cinema.schedule.forEach(film => {
         objFilm = {};
-        objFilm["cinema_schedule"] = [];
-        objFilm["film_image"] = film.film_image;
-        objFilm["film_name"] = film.film_name;
-        objCinema["schedule"] = film.film_schedule;
+        objFilm.cinema_schedule = [];
+        objFilm.film_image = film.film_image;
+        objFilm.film_name = film.film_name;
+        objCinema.schedule = film.film_schedule;
         objFilm.cinema_schedule.push({ ...objCinema });
         const tranformFilmName = objFilm.film_name
           .match(/([А-Я]{1}[а-яА-Яё0-24-9,. !№?:—-]{1,} ?)(3D)?/g)[0]
@@ -78,11 +72,11 @@ export default class PageGeneralSchedule extends Component<any, any> {
     return newData;
   };
 
-  handleChangeSelect = value => {
-    if (value === "films") {
-      this.setState({ data: [...this.transformDataforFilm()], idSelected: "films" });
+  handleChangeSelect = (optionValue: string) => {
+    if (optionValue === "films") {
+      this.setState({ data: [...this.transformDataForFilm()], selectedId: optionValue });
     } else {
-      this.setState({ data: [...this.defaultData], idSelected: "cinemas" });
+      this.setState({ data: [...this.defaultData], selectedId: optionValue });
     }
   };
 
@@ -103,7 +97,7 @@ export default class PageGeneralSchedule extends Component<any, any> {
           </div>
         </div>
 
-        <div className="general-schedule">{this.renderSchedule(this.state.idSelected)}</div>
+        <div className="general-schedule">{this.renderSchedule()}</div>
       </>
     );
   }

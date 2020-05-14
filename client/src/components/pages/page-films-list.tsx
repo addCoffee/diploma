@@ -11,33 +11,11 @@ export default class PageFilmsList extends Component<any, any> {
   };
 
   componentDidMount() {
-    this.props.cinemasApiClient
-      .getFilms()
+    this.props.cinemasApiClient.getFilms()
       .then(data => {
         this.setState({ data: [...data], isLoading: false });
       })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
-  renderFilms() {
-    let schedule = [];
-    this.state.data.forEach(item => {
-      const url = `/films/${item.id}`;
-      schedule.push(
-        <Link to={url}>
-          <Card
-            className="films-list__card-film"
-            hoverable
-            cover={<img alt="picture" src={item.film_image} />}
-          >
-            <Meta className="meta" title={item.film_name} />
-          </Card>
-        </Link>
-      );
-    });
-    return <div className="films-list">{schedule}</div>;
+      .catch((err: string) => console.warn(err));
   }
 
   render() {
@@ -49,7 +27,21 @@ export default class PageFilmsList extends Component<any, any> {
     return (
       <div>
         <h1>Фильмы</h1>
-        {this.renderFilms()}
+        <div className="films-list">
+          {
+            this.state.data.map(item => (
+              <Link to={`/films/${item.id}`}>
+                <Card
+                  className="films-list__card-film"
+                  hoverable
+                  cover={<img alt="picture" src={item.film_image} />}
+                >
+                  <Meta className="meta" title={item.film_name} />
+                </Card>
+              </Link>
+            ))
+          }
+        </div>
       </div>
     );
   }

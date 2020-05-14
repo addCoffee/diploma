@@ -11,9 +11,14 @@ export default class PageCinema extends Component<any, any> {
   };
 
   componentDidMount() {
-    this.props.cinemasApiClient.getCinema(this.props.match.params.cinemaId).then(res => {
-      this.setState({ cinema_name: res.cinema_name, schedule: res.schedule, isLoading: false });
-    });
+    this.props.cinemasApiClient.getCinema(this.props.match.params.cinemaId)
+      .then(({cinema_name, schedule}) => {
+        this.setState({
+          cinema_name,
+          schedule,
+          isLoading: false,
+        });
+      });
   }
 
   renderScheduleFilm(schedule_film) {

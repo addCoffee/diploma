@@ -14,19 +14,6 @@ export default class PageCinemaContacts extends Component<any, any> {
     });
   }
 
-  renderContacts() {
-    console.log(this.state.data);
-    let contacts = [];
-    this.state.data.contacts.forEach(item => {
-      contacts.push(
-        <li key={item.mean} className="contacts-list__contact-item">
-          <b>{item.text}</b> {item.mean}
-        </li>
-      );
-    });
-    return <ul className="cinema-contacts__contacts-list contacts-list">{contacts}</ul>;
-  }
-
   render() {
     if (this.state.isLoading) {
       return <Spin className="spin-loading" size="large" />;
@@ -61,7 +48,15 @@ export default class PageCinemaContacts extends Component<any, any> {
               />
             </Map>
           </YMaps>
-          {this.renderContacts()}
+          <ul className="cinema-contacts__contacts-list contacts-list">
+            {
+              this.state.data.contacts.forEach(item => (
+                <li key={item.mean} className="contacts-list__contact-item">
+                  <b>{item.text}</b> {item.mean}
+                </li>
+              ))
+            }
+          </ul>
         </div>
       </>
     );

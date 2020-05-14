@@ -11,8 +11,7 @@ export default class PageFilm extends Component<any, any> {
 
   componentDidMount() {
     //console.log(typeof this.props.match.params.filmId);
-    this.props.cinemasApiClient
-      .getFilms()
+    this.props.cinemasApiClient.getFilms()
       .then(data => {
         //console.log(data);
         this.setState({
@@ -20,9 +19,7 @@ export default class PageFilm extends Component<any, any> {
           isLoading: false,
         });
       })
-      .catch(err => {
-        console.log(err);
-      });
+      .catch((err: string) => console.warn(err));
   }
 
   renderScheduleCinema(schedule_film) {

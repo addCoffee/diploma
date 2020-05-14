@@ -1,26 +1,21 @@
-import React, { Component } from "react";
+import React from "react";
 import CardFilm from "../card-film/card-film";
 
-export default class CardCinema extends Component<any, any> {
-  renderCinema() {
-    let cinema = [];
-    this.props.schedule.forEach(film =>
-      cinema.push(
-        <CardFilm
-          name={this.props.idSelected === "cinemas" ? film.film_name : film.cinema_name}
-          schedule={this.props.idSelected === "cinemas" ? film.film_schedule : film.schedule}
-        />
-      )
-    );
-    return cinema;
-  }
-
-  render() {
-    return (
-      <>
-        <h3 className="general-schedule__cinema-name">{this.props.name}</h3>
-        <div className="general-schedule__cinema">{this.renderCinema()}</div>
-      </>
-    );
-  }
+export default function CardCinema(props: any) {
+  const {schedule, selectedId, name} = props;
+  return (
+    <>
+      <h3 className="general-schedule__cinema-name">{name}</h3>
+      <div className="general-schedule__cinema">
+        {
+          schedule.map(film => (
+            <CardFilm
+              name={selectedId === "cinemas" ? film.film_name : film.cinema_name}
+              schedule={selectedId === "cinemas" ? film.film_schedule : film.schedule}
+            />
+          ))
+        }
+      </div>
+    </>
+  );
 }
