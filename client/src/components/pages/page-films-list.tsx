@@ -36,7 +36,7 @@ export default class PageFilmsList extends Component<any, any> {
                   hoverable
                   cover={<img alt="picture" src={item.film_image} />}
                 >
-                  <Meta className="meta" title={item.film_name} />
+                  <Meta className="meta" title={item.filmName} />
                 </Card>
               </Link>
             ))

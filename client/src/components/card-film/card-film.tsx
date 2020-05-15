@@ -5,13 +5,13 @@ export default function CardFilm(props: any) {
 
   return (
     <div className="card-film">
-      <div className="card-film__name-film">{this.props.name}</div>
+      <div className="card-film__name-film">{props.name}</div>
       <ul className="card-film__schedule-film schedule-film">
         {
-          this.props.schedule.map(schedule => (
+          props.schedule.map(schedule => (
             <li
               className={
-                schedule.time > this.currentTime || schedule.time.startsWith("00:")
+                schedule.time > currentTime || schedule.time.startsWith("00:")
                   ? "schedule-film__time"
                   : "schedule-film__time schedule-film__time--disabled"
               }

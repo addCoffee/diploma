@@ -20,14 +20,17 @@ export default class App extends React.Component {
     this.authApiClient
       .getCurrentUserInfo()
       .then(userData => {
+        console.log(userData)
         this.setState({ userData, isUserLoaded: true });
       })
       .catch(() => {
+        console.log(1)
         this.setState({ isAuthRequired: true });
       });
   }
 
   render() {
+    // console.log(1)
     if (!this.state.isUserLoaded) {
       return <Spin className="spin-loading" size="large" />;
     }

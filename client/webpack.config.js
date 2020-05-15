@@ -12,14 +12,14 @@ module.exports = {
   },
   devServer: {
     compress: true,
-    port: 8080,
-    // open: true,
+    port: 8000,
+    open: true,
     overlay: true,
     historyApiFallback: true,
   },
   module: {
     rules: [{
-        test: /\.(tsx|js|ts|jsx)?$/,
+        test: /\.(tsx|js|ts)?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
       },
@@ -44,10 +44,10 @@ module.exports = {
   },
   plugins: [
     // new MiniCssExtractPlugin(),
-    // new HtmlWebpackPlugin({
-    //   minify: true,
-    //   chunks: ["bundle"],
-    //   template: ''
-    // })
+    new HtmlWebpackPlugin({
+      minify: true,
+      chunks: ["bundle"],
+      template: './src/index.html'
+    })
   ]
 };

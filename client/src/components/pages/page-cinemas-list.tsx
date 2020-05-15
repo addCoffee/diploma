@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { List, Card } from "antd";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
-import { cinemasList } from "src/utils/helpers";
+import { cinemasList } from "../../utils/helpers";
 
 
 export default class PageCinemasList extends Component {

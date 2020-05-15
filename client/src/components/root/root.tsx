@@ -16,7 +16,8 @@ const PageCinemaWithRouter = withRouter(PageCinema);
 const PageCinemaContactsWithRouter = withRouter(PageCinemaContacts);
 const PageFilmWithRouter = withRouter(PageFilm);
 
-export default function Root() {
+export default function Root(props: any) {
+  // @ts-ignore
   const cinemasApiClient = new CinemasApiClient();
   return (
     <HashRouter>

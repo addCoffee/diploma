@@ -3,6 +3,7 @@ import CardFilm from "../card-film/card-film";
 
 export default function CardCinema(props: any) {
   const {schedule, selectedId, name} = props;
+  console.log(props)
   return (
     <>
       <h3 className="general-schedule__cinema-name">{name}</h3>

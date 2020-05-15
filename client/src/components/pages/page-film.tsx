@@ -58,7 +58,7 @@ export default class PageFilm extends Component<any, any> {
   }
 
   render() {
-    const { film_image, film_age, film_duration, film_name, film_studio, film_genre } = this.state.film;
+    const { film_image, film_age, film_duration, filmName, film_studio, film_genre } = this.state.film;
 
     console.log(this.state.film);
 
@@ -67,7 +67,7 @@ export default class PageFilm extends Component<any, any> {
     }
     return (
       <>
-        <h1>{film_name}</h1>
+        <h1>{filmName}</h1>
         <div className="page-film">
           <img className="page-film__image" alt="picture" src={film_image} />
           <ul className="page-film__info info">

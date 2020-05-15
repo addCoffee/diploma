@@ -45,10 +45,10 @@ export default class PageCinema extends Component<any, any> {
     this.state.schedule.forEach(item =>
       schedule.push(
         <div className="film-billboard">
-          <div className="film-billboard__name">{item.film_name}</div>
+          <div className="film-billboard__name">{item.filmName}</div>
           <div className="film-billboard__film-content film-content">
             <img className="film-content__image" alt="picture" src={item.film_image} />
-            {this.renderScheduleFilm(item.film_schedule)}
+            {this.renderScheduleFilm(item.filmSchedule)}
           </div>
         </div>
       )

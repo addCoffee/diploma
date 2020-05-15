@@ -1,6 +1,8 @@
-import users from "./mocks/admins";
+import {users} from "./mocks/admins";
 
 export default class InternalApiClient {
+  _onAuthRequired;
+  _onAccessDenied;
   constructor(onAuthRequired, onAccessDenied) {
     this._onAuthRequired = onAuthRequired;
     this._onAccessDenied = onAccessDenied;

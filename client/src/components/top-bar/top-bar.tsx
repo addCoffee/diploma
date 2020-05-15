@@ -1,7 +1,7 @@
 import React from "react";
 import {Menu} from "antd";
 import {Link} from "react-router-dom";
-import {menuTopBar} from "src/utils/helpers";
+import { menuTopBar } from "../../utils/helpers";
 
 
 export default function TopBar() {
@@ -18,14 +18,6 @@ export default function TopBar() {
     }
   }
 
-  const renderMenu = () => {
-    return menuTopBar.map(({title, url}) => (
-      <Menu.Item className="menu__item" key={url}>
-        <Link to={url}>{title}</Link>
-      </Menu.Item>
-    ));
-  }
-
   return (
     <>
       <div className="logo top-bar__logo">КиноПММ</div>
@@ -35,7 +27,13 @@ export default function TopBar() {
         selectedKeys={getSelectedKeys()}
         className="top-bar__menu menu"
       >
-        {renderMenu()}
+        {
+          menuTopBar.map(({title, url}) => (
+            <Menu.Item className="menu__item" key={url}>
+              <Link to={url}>{title}</Link>
+            </Menu.Item>
+          ))
+        }
       </Menu>
     </>
   );

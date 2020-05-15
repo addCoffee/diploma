@@ -26,7 +26,7 @@ export default class PageGeneralSchedule extends Component<any, any> {
     return this.state.data.map(item => (
       <CardCinema
         selectedId={selectedId}
-        name={selectedId === "cinemas" ? item.cinema_name : item.film_name}
+        name={selectedId === "cinemas" ? item.cinema_name : item.filmName}
         schedule={selectedId === "cinemas" ? item.schedule : item.cinema_schedule}
       />
     ));
@@ -43,17 +43,17 @@ export default class PageGeneralSchedule extends Component<any, any> {
         objFilm = {};
         objFilm.cinema_schedule = [];
         objFilm.film_image = film.film_image;
-        objFilm.film_name = film.film_name;
-        objCinema.schedule = film.film_schedule;
+        objFilm.filmName = film.filmName;
+        objCinema.schedule = film.filmSchedule;
         objFilm.cinema_schedule.push({ ...objCinema });
-        const tranformFilmName = objFilm.film_name
+        const tranformFilmName = objFilm.filmName
           .match(/([А-Я]{1}[а-яА-Яё0-24-9,. !№?:—-]{1,} ?)(3D)?/g)[0]
           .trim()
           .replace("ё", "е")
           .toLowerCase();
         let isPushed = false;
         newData.forEach((newDataFilm, i) => {
-          const tranformNewDataFilmName = newDataFilm.film_name
+          const tranformNewDataFilmName = newDataFilm.filmName
             .match(/([А-Я]{1}[а-яА-Яё0-24-9,. !№?:—-]{1,} ?)(3D)?/g)[0]
             .trim()
             .replace("ё", "е")
