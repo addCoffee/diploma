@@ -1,56 +1,61 @@
 .general-schedule {
-    &__cinema-name {
-        margin: 10px 0px 10px 0px;
-    }
-    &__cinema {
-        border: 2px solid #eee;
-        font-size: 12px;
-        border-radius: 7px;
-        overflow: hidden;
-    }
+  &__cinema-name {
+    margin: 10px 0px 10px 0px;
+  }
+
+  &__cinema {
+    border: 2px solid #eee;
+    font-size: 12px;
+    border-radius: 7px;
+    overflow: hidden;
+  }
 }
 
 .general-schedule-header {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .card-film {
-    border: 2px solid #f6f6f6;
-    border-bottom: none;
-    color: #000;
-    width: 100%;
+  border: 2px solid #f6f6f6;
+  border-bottom: none;
+  color: #000;
+  width: 100%;
+  display: flex;
+
+  &__name-film {
+    padding: 5px;
+    min-width: 50%;
+    width: 50%;
+    color: #f60;
+    max-width: 300px;
     display: flex;
-    &__name-film {
-        padding: 5px;
-        min-width: 50%;
-        width: 50%;
-        color: #f60;
-        max-width: 300px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-    }
+    justify-content: flex-start;
+    align-items: center;
+  }
 }
+
 .card-film:last-child {
-    border-bottom: 2px solid #f6f6f6;
+  border-bottom: 2px solid #f6f6f6;
 }
 
 .schedule-film {
-    list-style-type: none;
-    padding: 5px;
-    margin: 0px;
-    margin-left: 10px;
-    cursor: pointer;
-    display: flex;
-    flex-wrap: wrap;
-    &__time {
-        text-decoration: underline;
-        margin: 7px;
-        &--disabled {
-            text-decoration: none;
-            color: #abaaaa;
-            cursor: auto;
-        }
+  list-style-type: none;
+  padding: 5px;
+  margin: 0px;
+  margin-left: 10px;
+  cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
+
+  &__time {
+    text-decoration: underline;
+    margin: 7px;
+
+    &--disabled {
+      text-decoration: none;
+      color: #abaaaa;
+      cursor: auto;
     }
+  }
 }
