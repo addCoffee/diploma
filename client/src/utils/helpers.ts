@@ -53,3 +53,19 @@ export const cinemasList = [
     namePath: "Left-bank",
   },
 ];
+
+export enum TypeRegExp {
+  FILM_NAME = "([А-Я]{1}[а-яА-Яё0-24-9,. !№?:—-]{1,} ?)(3D)?",
+}
+
+const transformName = (name: string, type: TypeRegExp) => {
+  const regexp = new RegExp(type, "g");
+  return name.match(regexp)[0]
+        .trim()
+        .replace("ё", "е")
+        .toLowerCase();
+}
+
+export const isSimilarName = (firstName: string, secondName: string, type: TypeRegExp) => {
+  return transformName(firstName, type).startsWith(transformName(secondName, type));
+}

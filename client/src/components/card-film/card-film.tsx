@@ -8,8 +8,9 @@ export default function CardFilm(props: any) {
       <div className="card-film__name-film">{props.name}</div>
       <ul className="card-film__schedule-film schedule-film">
         {
-          props.schedule.map(schedule => (
+          props.schedule.map((schedule, idx: number) => (
             <li
+              key={idx}
               className={
                 schedule.time > currentTime || schedule.time.startsWith("00:")
                   ? "schedule-film__time"

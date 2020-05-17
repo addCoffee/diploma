@@ -6,7 +6,7 @@ interface CinemaModel {
 }
 
 interface FilmModel {
-  name: string;
+  name?: string;
   image: string;
   age?: string;
   studio?: string;

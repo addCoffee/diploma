@@ -1,12 +1,20 @@
-import React, { Component } from "react";
-import { Spin, Select } from "antd";
+import React from "react";
+import {Spin, Select} from "antd";
 import CardCinema from "../card-cinema/card-cinema";
+import CinemasApiClient from "src/services/api/cinemas-api-client";
+import {isSimilarName, TypeRegExp} from "../../utils/helpers";
 
 const { Option } = Select;
 
-export default class PageGeneralSchedule extends Component<any, any> {
-  defaultData = [];
-  state = {
+interface PageGeneralScheduleState {
+  isLoading: boolean;
+  data: CinemaModel[];
+  selectedId: 'cinemas' | 'films';
+}
+
+export default class PageGeneralSchedule extends React.Component<{cinemasApiClient: CinemasApiClient}, PageGeneralScheduleState> {
+  initialData: CinemaModel[] = [];
+  state: PageGeneralScheduleState = {
     isLoading: true,
     data: [],
     selectedId: "cinemas",
@@ -15,68 +23,48 @@ export default class PageGeneralSchedule extends Component<any, any> {
   componentDidMount() {
     this.props.cinemasApiClient.getGeneralSchedule()
       .then(data => {
-        this.defaultData = [...data];
-        this.setState({ data: [...data], isLoading: false });
+        this.initialData = data;
+        this.setState({data, isLoading: false});
       })
-      .catch(err =>  console.warn(err));
+      .catch((err: string) =>  console.warn(err));
   }
 
   renderSchedule = () => {
-    const {selectedId} = this.state;
-    return this.state.data.map(item => (
+    return this.state.data.map((item, idx: number) => (
       <CardCinema
-        selectedId={selectedId}
-        name={selectedId === "cinemas" ? item.cinema_name : item.filmName}
-        schedule={selectedId === "cinemas" ? item.schedule : item.cinema_schedule}
+        key={idx}
+        name={item.name}
+        schedule={item.schedule}
       />
     ));
   };
 
-  transformDataForFilm = () => {
-    let newData = [];
-    this.defaultData.forEach(cinema => {
-      let objFilm:any = {};
-      objFilm.cinema_schedule = [];
-      let objCinema: any = {};
-      objCinema.cinema_name = cinema.cinema_name;
+  transformDataIntoFilms = () => {
+    let films = [];
+    this.initialData.forEach(cinema => {
       cinema.schedule.forEach(film => {
-        objFilm = {};
-        objFilm.cinema_schedule = [];
-        objFilm.film_image = film.film_image;
-        objFilm.filmName = film.filmName;
-        objCinema.schedule = film.filmSchedule;
-        objFilm.cinema_schedule.push({ ...objCinema });
-        const tranformFilmName = objFilm.filmName
-          .match(/([А-Я]{1}[а-яА-Яё0-24-9,. !№?:—-]{1,} ?)(3D)?/g)[0]
-          .trim()
-          .replace("ё", "е")
-          .toLowerCase();
-        let isPushed = false;
-        newData.forEach((newDataFilm, i) => {
-          const tranformNewDataFilmName = newDataFilm.filmName
-            .match(/([А-Я]{1}[а-яА-Яё0-24-9,. !№?:—-]{1,} ?)(3D)?/g)[0]
-            .trim()
-            .replace("ё", "е")
-            .toLowerCase();
-
-          if (tranformNewDataFilmName.startsWith(tranformFilmName) && isPushed === false) {
-            newData[i].cinema_schedule.push({ ...objCinema });
-            isPushed = true;
+        const foundIndex = films.findIndex(({name}) => isSimilarName(name, film.name, TypeRegExp.FILM_NAME));
+        if (foundIndex !== -1) {
+          films[foundIndex] = {
+            ...film,
+            schedule: [...films[foundIndex].schedule, {name: cinema.name, schedule: film.schedule}],
           }
-        });
-        if (!isPushed) {
-          newData.push({ ...objFilm });
+        } else {
+          films.push({
+            ...film,
+            schedule: [{name: cinema.name, schedule: film.schedule}],
+          });
         }
       });
     });
-    return newData;
+    return films;
   };
 
-  handleChangeSelect = (optionValue: string) => {
+  handleChangeSelect = (optionValue: 'cinemas' | 'films') => {
     if (optionValue === "films") {
-      this.setState({ data: [...this.transformDataForFilm()], selectedId: optionValue });
+      this.setState({ data: [...this.transformDataIntoFilms()], selectedId: optionValue });
     } else {
-      this.setState({ data: [...this.defaultData], selectedId: optionValue });
+      this.setState({ data: [...this.initialData], selectedId: optionValue });
     }
   };
 

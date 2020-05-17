@@ -1,9 +1,14 @@
-const CURRENT_DAY = new Date(Date.now()).toLocaleString("ru", { timeZone: "UTC", month: "long", day: "numeric" });
-const NEXT_DAY = new Date(Date.now() + 86400000).toLocaleString("ru", {
+import { isSimilarName, TypeRegExp } from "../../utils/helpers";
+
+// Cinemas closed, data isn't actual
+let CURRENT_DAY = new Date(Date.now()).toLocaleString("ru", { timeZone: "UTC", month: "long", day: "numeric" });
+CURRENT_DAY = "17 июня";
+let NEXT_DAY = new Date(Date.now() + 86400000).toLocaleString("ru", {
     timeZone: "UTC",
     month: "long",
     day: "numeric",
 });
+NEXT_DAY = "18 июня";
 const fetchParams = {
   method: "get",
   headers: {
@@ -55,7 +60,6 @@ export default class CinemasApiClient {
                     newItem.push({ ...timeAndRoom });
                 }
                 timeAndRoom = {};
-                // console.log(typeof itemNew[i]);
                 timeAndRoom.room = itemNew[i].slice(0, itemNew[i].length - 1);
               } else {
                 timeAndRoom.time = itemNew[i];
@@ -75,7 +79,7 @@ export default class CinemasApiClient {
           url: "spartak",
           coords: [51.66197289303437, 39.20448107491798],
         };
-        const film: FilmModel = {name: "", schedule: [], image: "", genre: []};
+        let film: any = {};
         dataSource.forEach((item, i) => {
           if (/images/.test(item)) {
             if (Object.keys(film).length && film.schedule.length) {
@@ -91,11 +95,11 @@ export default class CinemasApiClient {
               film.schedule.push({room, time});
             });
           }
-          if (film.schedule.length) {
+          if (dataSource.length - 1 === i && film.schedule.length) {
             cinema.schedule.push({ ...film });
           }
         });
-        // console.log(cinema);
+
         return cinema;
     })
     .catch(err => console.warn(err));
@@ -108,8 +112,7 @@ export default class CinemasApiClient {
         return item.match(generalImages)[1];
       } else if (!/[0-9]{2}:[0-9]{2}/.test(item)) {
         let newItem = item.match(nameFilm)[1];
-        return newItem.replace(/&nbsp;/g, " ");
-        //return item.match(name)[1];
+        return newItem.replace(/(&nbsp;|<\/a> <span class="format3d">3D)/g, " ");
       } else {
         return item.match(/([0-9]{2}:[0-9]{2})/)[1];
       }
@@ -175,10 +178,12 @@ export default class CinemasApiClient {
           "proletarian",
           "http://proletka.ru/",
           "Пролетарий",
-          /<a class="link" href="\/movies\/.*\/"><span>(.*)<\/span>|<em class="film-time">([0-9]{2}:[0-9]{2})<\/em><\/li>|ambl-image" src="(\/images\/cms\/thumbs\/[0-9a-z]+\/[0-9a-z_]+\.jpg)/g,
+          // /<a class="link" href="\/movies\/.*\/"><span>(.*)<\/span>|<em class="film-time">([0-9]{2}:[0-9]{2})<\/em><\/li>|ambl-image" src="(\/images\/cms\/thumbs\/[0-9a-z]+\/[0-9a-z_]+\.jpg)/g,
+          /href="\/movies\/.*\/"><?s?p?a?n?>?(.*)((?<!>)<\/sp|<\/a><\/span)|<em class="film-time">([0-9]{2}:[0-9]{2})<\/em><\/li>|ambl-image" src="(\/images\/cms\/thumbs\/[0-9a-z]+\/[0-9a-z_]+\.jpg)/g,
           /src/,
           /="(\/images\/cms\/thumbs\/[0-9a-z]+\/[0-9a-z_]+\.jpg)/,
-          /an>(.*)</,
+          /href="\/movies\/.*\/"><?s?p?a?n?>?(.*)((?<!>)<\/sp|<\/a><\/span)/,
+          // /an>(.*)</g,
           /images/
         );
       })
@@ -190,7 +195,7 @@ export default class CinemasApiClient {
       .then(res => res.clone().text())
       .then(resText => {
         let dataSource = resText.match(
-          /movie_card_header title">\s+(.*)\s+<|<span class="shedule_session_time">\s+([0-9]{2}:[0-9]{2})|<img class="shedule_movie_img" src="(https:\/\/.*?\.kinoteatr\.ru\/preview6\/upload\/.*?\.jpg)">|data-gtm-list-item-genre="([а-я, ]+)"|raiting_sub">([0-9]+\+)<\/i>|"title">\s+([0-3] ч\. [0-9]+ мин\.)\s+<\/span>|shedule_movie_text">([а-яА-Яёa-zA-Z() \s]+)<\/span>/g
+          /data-gtm-list-item-filmName="(.*?)"|<span class="shedule_session_time">\s+([0-9]{2}:[0-9]{2})|<img class="shedule_movie_img" src="(https:\/\/.*?\.kinoteatr\.ru\/preview6\/upload\/.*?\.jpg)">|data-gtm-list-item-genre="([а-я, ]+)"|raiting_sub">([0-9]+\+)<\/i>|"title">\s+([0-3] ч\. [0-9]+ мин\.)\s+<\/span>|shedule_movie_text">([а-яА-Яёa-zA-Z() \s]+)<\/span>/g
         );
 
         dataSource = dataSource.map(item => {
@@ -203,37 +208,29 @@ export default class CinemasApiClient {
           }
         });
 
-        // console.log(dataSource);
         const cinema: CinemaModel = {
           name: "Синема Парк",
           schedule: [],
           url: "cinema-park",
           coords: [51.666657102324095, 39.19122787756437],
         };
-        // cinema.schedule = dataSource.map(item => {
-        //   return {} as any;
-        // })
-        console.log(dataSource)
+
         const film: FilmModel = {name: "", schedule: [], image: "", genre: []};
         dataSource.forEach((item, i) => {
-          if (!/[0-9]{2}:[0-9]{2}/.test(item) && /movie_card_header/.test(item)) {
+          if (!/[0-9]{2}:[0-9]{2}/.test(item) && /filmName/.test(item)) {
             if (Object.keys(film).length && film.schedule.length) {
               cinema.schedule.push({ ...film });
             }
-            // film.name = "";
             film.schedule = [];
             film.image = "";
             film.name = item.match(/"(.*?)"/)[1];
           } else if (/http/.test(item)) {
             film.image = `${item}`;
           } else if (/genre/.test(item)) {
-            film.genre = [];
-            //console.log(item.match(/([а-я, ]+)/g)[0], typeof item.match(/([а-я, ]+)/g)[0]);
             film.genre = item.match(/([а-я, ]+)/g)[0].split(",");
           } else if (/raiting_/.test(item)) {
             film.age = item.match(/([0-9]+)/g)[0];
           } else if (/shedule_movie_text/.test(item)) {
-            //console.log(item.match(/>([а-яА-Яёa-zA-Z() \s]+)/g)[0].match(/([а-яА-Яёa-zA-Z() \s]+)/g));
             film.studio = item
               .match(/>([а-яА-Яёa-zA-Z() \s]+)/g)[0]
               .match(/([а-яА-Яёa-zA-Z() \s]+)/g)[0]
@@ -251,7 +248,7 @@ export default class CinemasApiClient {
             cinema.schedule.push({ ...film });
           }
         });
-        console.log(cinema);
+
         return cinema;
       })
       .catch(err => console.warn(err));
@@ -293,7 +290,7 @@ export default class CinemasApiClient {
           coords: [51.66197289303437, 39.20448107491798],
           address: "Пл.Ленина, д.13",
         };
-        // console.log(dataSource);
+
         return dataSource;
       })
       .catch(err => console.warn(err));
@@ -311,7 +308,7 @@ export default class CinemasApiClient {
     }
   }
 
-  async getGeneralSchedule() {
+  async getGeneralSchedule(): Promise<CinemaModel[]> {
     if (!this.dataScope.length) {
       await this.updateInfoAllCinemas();
     }
@@ -323,66 +320,34 @@ export default class CinemasApiClient {
       await this.updateInfoAllCinemas();
     }
 
-    let newData = [];
+    let films = [];
     let id = 1;
-    console.log(this.dataScope)
     this.dataScope.forEach(cinema => {
-      let objFilm: any = {
-        cinema_schedule: [],
-      };
-      objFilm.cinema_schedule = [];
-      let objCinema = {
-        cinema_name: '',
-        schedule: [],
-      };
-      objCinema.cinema_name = cinema.cinema_name;
       cinema.schedule.forEach(film => {
-        objFilm = {};
-        objFilm.cinema_schedule = [];
-        objFilm.image = film.image;
-        objFilm.name = film.name;
-        objCinema.schedule = film.schedule;
-        if (objCinema.cinema_name === "Синема Парк") {
-          // console.log(film.name);
-          objFilm.age = film.age;
-          objFilm.duration = film.duration;
-          objFilm.genre = film.genre;
-          objFilm.studio = film.studio;
-        }
-        objFilm.cinema_schedule.push({ ...objCinema });
-        const tranformFilmName = objFilm.name
-          .match(/([А-Я]{1}[а-яА-Яё0-24-9,. !№?:—-]{1,} ?)(3D)?/g)[0]
-          .trim()
-          .replace("ё", "е")
-          .toLowerCase();
-        let isPushed = false;
-        newData.forEach((newDataFilm, i) => {
-          const tranformNewDataFilmName = newDataFilm.name
-            .match(/([А-Я]{1}[а-яА-Яё0-24-9,. !№?:—-]{1,} ?)(3D)?/g)[0]
-            .trim()
-            .replace("ё", "е")
-            .toLowerCase();
-
-          if (tranformNewDataFilmName.startsWith(tranformFilmName) && isPushed === false) {
-            newData[i].cinema_schedule.push({ ...objCinema });
-            isPushed = true;
+        const foundIndex = films.findIndex(({name}) => isSimilarName(name, film.name, TypeRegExp.FILM_NAME));
+        if (foundIndex !== -1) {
+          films[foundIndex] = {
+            ...film,
+            id,
+            schedule: [...films[foundIndex].schedule, {name: cinema.name, schedule: film.schedule}],
           }
-        });
-        if (!isPushed) {
-          objFilm.id = id;
-          id++;
-          newData.push({ ...objFilm });
+        } else {
+          id = id++;
+          films.push({
+            ...film,
+            id,
+            schedule: [{name: cinema.name, schedule: film.schedule}],
+          });
         }
       });
     });
-    // console.log(newData)
-    return newData;
+    return films;
   }
 
   async updateInfoAllCinemas() {
     await this.getCinemaPark().then(data => this.dataScope.push(data));
-    // await this.getSpartak().then(data => this.dataScope.push(data));
-    // await this.getMaximir().then(data => this.dataScope.push(data));
-    // await this.getProletarian().then(data => this.dataScope.push(data));
+    await this.getSpartak().then(data => this.dataScope.push(data));
+    await this.getMaximir().then(data => this.dataScope.push(data));
+    await this.getProletarian().then(data => this.dataScope.push(data));
   }
 }

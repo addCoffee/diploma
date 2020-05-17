@@ -30,7 +30,7 @@ export default class PageFilmsList extends Component<any, any> {
         <div className="films-list">
           {
             this.state.data.map(item => (
-              <Link to={`/films/${item.id}`}>
+              <Link key={item.id} to={`/films/${item.id}`}>
                 <Card
                   className="films-list__card-film"
                   hoverable
